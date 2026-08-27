@@ -14,6 +14,15 @@
 <meta property="og:locale" content="pt_BR">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/css/site.css">
+<script>
+/* O site antigo era uma pagina so, com ancoras. Um fragmento (#sobre) nunca
+   chega ao servidor, entao isto NAO pode ser feito em _redirects — tem de ser
+   no navegador. Roda antes da primeira pintura para nao piscar a home.
+   #resultados e #depoimentos nao estao aqui de proposito: aquelas secoes
+   foram removidas por nao conformidade (LAINE_02) e devem cair na home. */
+(function(){try{var m={"#sobre":"/sobre/","#atuacao":"/atuacao/","#servicos":"/atuacao/","#contato":"/contato/","#faq":"/atuacao/prisao-em-flagrante/"};
+if(location.pathname==="/"&&m[location.hash]){location.replace(m[location.hash]);}}catch(e){}})();
+</script>
 <script src="/assets/js/consent.js"></script>
 </head>
 <body>

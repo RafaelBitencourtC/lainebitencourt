@@ -1,4 +1,10 @@
 # Arquivos do repositorio que nao fazem parte do site publicado.
-wrangler.jsonc
-.assetsignore
+# ATENCAO: assets.directory e a raiz do repo, entao tudo que nao for site
+# precisa estar listado aqui.
 .git
+.gitignore
+.assetsignore
+wrangler.jsonc
+.wrangler
+node_modules
+*.log
