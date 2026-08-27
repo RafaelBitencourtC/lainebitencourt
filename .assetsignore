@@ -8,3 +8,11 @@ wrangler.jsonc
 .wrangler
 node_modules
 *.log
+
+# Imagens que sobraram do template e das versoes anteriores. Continuam no
+# repositorio (sao arquivos do Rafael, nao meus para apagar), mas nao sao
+# publicadas: nenhuma pagina as referencia depois do commit b64c34f.
+perfill.jpeg
+assets/img/laine.jpg
+assets/img/logo-mark.png
+assets/img/logo-lockup.png
