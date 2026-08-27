@@ -5,5 +5,19 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-/assets/*
+# Imagens e fontes: nome estavel, conteudo estavel — cache longo esta certo.
+/assets/img/*
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS e JS NAO sao immutable: o nome do arquivo nao muda a cada edicao, e
+# "immutable" impede o navegador de ate revalidar. Foi por isso que o deploy
+# de 27/08/2026 saiu com HTML novo e CSS antigo. Cache curto + revalidacao,
+# e o ?v= no href para furar o cache de quem ja visitou.
+/assets/css/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/assets/js/*
+  Cache-Control: public, max-age=300, must-revalidate
