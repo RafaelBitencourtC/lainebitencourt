@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#05070C">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aviso legal — Laine Bitencourt</title>
 <meta name="description" content="Identificação profissional, natureza informativa do site e observância do Provimento nº 205/2021 da OAB.">
@@ -12,17 +13,25 @@
 <meta property="og:description" content="Identificação profissional, natureza informativa do site e observância do Provimento nº 205/2021 da OAB.">
 <meta property="og:locale" content="pt_BR">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/space-grotesk-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
+<script>document.documentElement.classList.add('js');</script>
 <script src="/assets/js/consent.js"></script>
 </head>
 <body>
+<div class="field" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
 <a class="skip" href="#main">Ir para o conteúdo</a>
 
 <header class="hd">
   <div class="wrap hd__in">
-    <a class="brand" href="/">
-      <span class="brand__n">Laine Bitencourt</span>
-      <span class="brand__o">Advogada · OAB/GO 78.565</span>
+    <a class="brand" href="/" style="flex-direction:row;align-items:center;gap:11px;">
+      <picture><source srcset="/assets/img/lb-monograma.avif" type="image/avif"><source srcset="/assets/img/lb-monograma.webp" type="image/webp"><img src="/assets/img/lb-monograma.png" alt="" width="30" height="31" decoding="async" style="display:block;flex-shrink:0;"></picture>
+      <span style="display:flex;flex-direction:column;gap:1px;">
+        <span class="brand__n">Laine Bitencourt</span>
+        <span class="brand__o">Advogada · OAB/GO 78.565</span>
+      </span>
     </a>
     <button class="navbtn" type="button" aria-expanded="false" aria-controls="nav">
       <span></span><span></span><span></span>
@@ -44,21 +53,21 @@
   </nav>
 
   <section class="wrap sec stack" style="gap:16px;">
-    <p class="eyebrow">Informações</p>
-    <h1>Aviso legal</h1>
+    <p data-reveal class="eyebrow">Informações</p>
+    <h1 data-reveal>Aviso legal</h1>
   </section>
 
   <section class="wrap sec stack" style="gap:22px;max-width:680px;padding-bottom:40px;">
 
     <div class="stack" style="gap:10px;">
-      <h2>Responsável</h2>
+      <h2 data-reveal>Responsável</h2>
       <p>Laine Bitencourt, advogada inscrita na Ordem dos Advogados do Brasil,
       Seccional de Goiás, sob o nº 78.565.</p>
       <p class="small">Contato: <a href="tel:+5562992120065" data-contato="telefone" data-local="bloco_contato">(62) 99212-0065</a></p>
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Natureza deste site</h2>
+      <h2 data-reveal>Natureza deste site</h2>
       <p>Este site tem finalidade meramente informativa. O conteúdo aqui
       publicado não constitui consulta jurídica, parecer ou oferta de serviços,
       e não substitui a orientação de advogado sobre o caso concreto.</p>
@@ -68,7 +77,7 @@
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Publicidade na advocacia</h2>
+      <h2 data-reveal>Publicidade na advocacia</h2>
       <p>As informações publicadas observam o Provimento nº 205/2021 do
       Conselho Federal da Ordem dos Advogados do Brasil e o Código de Ética e
       Disciplina da OAB.</p>
@@ -78,14 +87,14 @@
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Sigilo profissional</h2>
+      <h2 data-reveal>Sigilo profissional</h2>
       <p>As informações enviadas por meio deste site são tratadas com reserva.
       Ainda assim, recomenda-se não detalhar fatos por formulário ou mensagem
       antes do primeiro atendimento.</p>
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Conteúdo e alterações</h2>
+      <h2 data-reveal>Conteúdo e alterações</h2>
       <p>A legislação e a jurisprudência mudam. O conteúdo deste site pode ser
       alterado a qualquer momento, sem aviso prévio, e não há garantia de que
       permaneça atualizado em relação a alterações posteriores à sua
@@ -96,7 +105,7 @@
 
 </main>
 
-<footer class="ft">
+<footer class="ft lazy">
   <div class="wrap ft__in">
     <div class="stack" style="gap:4px;">
       <p class="ft__n">Laine Bitencourt</p>
@@ -104,10 +113,12 @@
     </div>
     <div class="stack" style="gap:7px;">
       <p><a href="tel:+5562992120065" data-contato="telefone" data-local="rodape">(62) 99212-0065</a></p>
+      <p><a href="mailto:adv.lainebitencourt@gmail.com" data-contato="email" data-local="rodape">adv.lainebitencourt@gmail.com</a></p>
       <p>Goiânia e Aparecida de Goiânia — Goiás</p>
       <p>Retorno de mensagens: em até 50 minutos</p>
     </div>
     <div class="ft__rule"></div>
+    <p><a href="https://www.instagram.com/lainebitencourt.adv/" rel="me noopener" target="_blank">@lainebitencourt.adv</a></p>
     <nav class="ft__nav" aria-label="Rodapé">
       <a href="/atuacao/">Áreas de atuação</a>
       <a href="/sobre/">Sobre</a>

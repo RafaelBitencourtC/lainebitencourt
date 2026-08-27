@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#05070C">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Política de Privacidade — Laine Bitencourt</title>
 <meta name="description" content="Como os dados pessoais são tratados neste site, nos termos da LGPD: finalidades, bases legais, cookies, compartilhamento e direitos do titular.">
@@ -12,17 +13,25 @@
 <meta property="og:description" content="Como os dados pessoais são tratados neste site, nos termos da LGPD: finalidades, bases legais, cookies, compartilhamento e direitos do titular.">
 <meta property="og:locale" content="pt_BR">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/space-grotesk-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/site.css">
+<script>document.documentElement.classList.add('js');</script>
 <script src="/assets/js/consent.js"></script>
 </head>
 <body>
+<div class="field" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
 <a class="skip" href="#main">Ir para o conteúdo</a>
 
 <header class="hd">
   <div class="wrap hd__in">
-    <a class="brand" href="/">
-      <span class="brand__n">Laine Bitencourt</span>
-      <span class="brand__o">Advogada · OAB/GO 78.565</span>
+    <a class="brand" href="/" style="flex-direction:row;align-items:center;gap:11px;">
+      <picture><source srcset="/assets/img/lb-monograma.avif" type="image/avif"><source srcset="/assets/img/lb-monograma.webp" type="image/webp"><img src="/assets/img/lb-monograma.png" alt="" width="30" height="31" decoding="async" style="display:block;flex-shrink:0;"></picture>
+      <span style="display:flex;flex-direction:column;gap:1px;">
+        <span class="brand__n">Laine Bitencourt</span>
+        <span class="brand__o">Advogada · OAB/GO 78.565</span>
+      </span>
     </a>
     <button class="navbtn" type="button" aria-expanded="false" aria-controls="nav">
       <span></span><span></span><span></span>
@@ -44,23 +53,23 @@
   </nav>
 
   <section class="wrap sec stack" style="gap:16px;">
-    <p class="eyebrow">Informações</p>
-    <h1>Política de Privacidade</h1>
-    <p class="lede">Como os dados pessoais são tratados neste site, nos termos
+    <p data-reveal class="eyebrow">Informações</p>
+    <h1 data-reveal>Política de Privacidade</h1>
+    <p data-reveal class="lede">Como os dados pessoais são tratados neste site, nos termos
     da Lei nº 13.709/2018 (LGPD).</p>
   </section>
 
   <section class="wrap sec stack" style="gap:22px;max-width:680px;padding-bottom:40px;">
 
     <div class="stack" style="gap:10px;">
-      <h2>Controladora</h2>
+      <h2 data-reveal>Controladora</h2>
       <p>Laine Bitencourt, advogada inscrita na OAB/GO sob o nº 78.565, é a
       controladora dos dados pessoais tratados neste site.</p>
       <p class="small">Contato para assuntos de proteção de dados: <a href="tel:+5562992120065" data-contato="telefone" data-local="bloco_contato">(62) 99212-0065</a></p>
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Dados que você envia</h2>
+      <h2 data-reveal>Dados que você envia</h2>
       <p>Se você entrar em contato pelo formulário, pelo WhatsApp, por telefone
       ou por e-mail, são tratados os dados que você mesmo informar — nome,
       telefone, e-mail e o conteúdo da mensagem.</p>
@@ -74,7 +83,7 @@
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Cookies e medição de audiência</h2>
+      <h2 data-reveal>Cookies e medição de audiência</h2>
       <p>Este site utiliza o Google Analytics para entender como as páginas são
       utilizadas, e poderá utilizar cookies do Google Ads para medir a
       efetividade de anúncios.</p>
@@ -87,7 +96,7 @@
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Compartilhamento e transferência internacional</h2>
+      <h2 data-reveal>Compartilhamento e transferência internacional</h2>
       <p>Havendo consentimento, dados de navegação são compartilhados com a
       Google LLC, que os trata em servidores no exterior. Trata-se de
       transferência internacional de dados, realizada com base no consentimento
@@ -98,7 +107,7 @@
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Prazo de guarda</h2>
+      <h2 data-reveal>Prazo de guarda</h2>
       <p>Mensagens de contato são mantidas pelo tempo necessário ao atendimento
       e, havendo constituição de patrono, pelo prazo aplicável à guarda de
       documentos profissionais. Dados de medição de audiência seguem o prazo de
@@ -106,7 +115,7 @@
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Seus direitos</h2>
+      <h2 data-reveal>Seus direitos</h2>
       <p>Nos termos dos arts. 17 e 18 da LGPD, você pode solicitar confirmação
       da existência de tratamento, acesso, correção, anonimização, portabilidade
       ou eliminação dos seus dados, bem como informação sobre compartilhamento e
@@ -115,14 +124,14 @@
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Revogar o consentimento de cookies</h2>
+      <h2 data-reveal>Revogar o consentimento de cookies</h2>
       <p>Você pode retirar o consentimento a qualquer momento. O aviso será
       exibido novamente e nada é gravado até um novo aceite.</p>
       <p><button type="button" class="btn btn--s" onclick="if(window.lbRedefinirConsentimento){window.lbRedefinirConsentimento();}">Revogar consentimento</button></p>
     </div>
 
     <div class="stack" style="gap:10px;">
-      <h2>Alterações</h2>
+      <h2 data-reveal>Alterações</h2>
       <p>Esta política pode ser atualizada. A versão vigente é sempre a
       publicada nesta página.</p>
     </div>
@@ -131,7 +140,7 @@
 
 </main>
 
-<footer class="ft">
+<footer class="ft lazy">
   <div class="wrap ft__in">
     <div class="stack" style="gap:4px;">
       <p class="ft__n">Laine Bitencourt</p>
@@ -139,10 +148,12 @@
     </div>
     <div class="stack" style="gap:7px;">
       <p><a href="tel:+5562992120065" data-contato="telefone" data-local="rodape">(62) 99212-0065</a></p>
+      <p><a href="mailto:adv.lainebitencourt@gmail.com" data-contato="email" data-local="rodape">adv.lainebitencourt@gmail.com</a></p>
       <p>Goiânia e Aparecida de Goiânia — Goiás</p>
       <p>Retorno de mensagens: em até 50 minutos</p>
     </div>
     <div class="ft__rule"></div>
+    <p><a href="https://www.instagram.com/lainebitencourt.adv/" rel="me noopener" target="_blank">@lainebitencourt.adv</a></p>
     <nav class="ft__nav" aria-label="Rodapé">
       <a href="/atuacao/">Áreas de atuação</a>
       <a href="/sobre/">Sobre</a>

@@ -1,3 +1,7 @@
-.wrangler/
-node_modules/
+*.bak
 *.log
+.DS_Store
+.wrangler/
+Thumbs.db
+node_modules/
+npx

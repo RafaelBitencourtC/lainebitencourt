@@ -4,6 +4,13 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cache-Control: public, max-age=0, must-revalidate
+
+# A regra acima cobre o HTML: revalida sempre. Sem ela o navegador guardava a
+# pagina por tempo indeterminado e um deploy novo parecia nao ter acontecido —
+# foi exatamente o que ocorreu em 27/08/2026, com a pagina antiga sendo servida
+# do cache local horas depois do deploy correto. O oposto do problema que estas
+# regras ja documentavam para CSS/JS, e igualmente caro em tempo perdido.
 
 # Imagens e fontes: nome estavel, conteudo estavel — cache longo esta certo.
 /assets/img/*

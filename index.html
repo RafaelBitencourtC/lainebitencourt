@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#05070C">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Advogada criminalista em Goiânia — Laine Bitencourt</title>
 <meta name="description" content="Laine Bitencourt, advogada inscrita na OAB/GO sob o nº 78.565. Atuação em direito penal e processo penal, em todas as fases, em Goiânia e Aparecida de Goiânia.">
@@ -13,26 +14,22 @@
 <meta property="og:image" content="https://lainebitencourt.com.br/assets/img/og-default.jpg">
 <meta property="og:locale" content="pt_BR">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/css/site.css?v=20260827">
-<script>
-/* O site antigo era uma pagina so, com ancoras. Um fragmento (#sobre) nunca
-   chega ao servidor, entao isto NAO pode ser feito em _redirects — tem de ser
-   no navegador. Roda antes da primeira pintura para nao piscar a home.
-   #resultados e #depoimentos nao estao aqui de proposito: aquelas secoes
-   foram removidas por nao conformidade (LAINE_02) e devem cair na home. */
-(function(){try{var m={"#sobre":"/sobre/","#atuacao":"/atuacao/","#servicos":"/atuacao/","#contato":"/contato/","#faq":"/atuacao/prisao-em-flagrante/"};
-if(location.pathname==="/"&&m[location.hash]){location.replace(m[location.hash]);}}catch(e){}})();
-</script>
+<link rel="preload" href="/assets/fonts/space-grotesk-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/space-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>document.documentElement.classList.add('js');</script>
 <script src="/assets/js/consent.js"></script>
 </head>
 <body>
+<div class="field" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
 <a class="skip" href="#main">Ir para o conteúdo</a>
 
-<header class="hd hd--d">
+<header class="hd">
   <div class="wrap hd__in">
-    <a class="brand brand--m" href="/" aria-label="Laine Bitencourt — página inicial">
-      <img src="/assets/img/logo-mark.png" alt="" width="80" height="79">
-      <span class="brand__t">
+    <a class="brand" href="/" style="flex-direction:row;align-items:center;gap:11px;">
+      <picture><source srcset="/assets/img/lb-monograma.avif" type="image/avif"><source srcset="/assets/img/lb-monograma.webp" type="image/webp"><img src="/assets/img/lb-monograma.png" alt="" width="30" height="31" decoding="async" style="display:block;flex-shrink:0;"></picture>
+      <span style="display:flex;flex-direction:column;gap:1px;">
         <span class="brand__n">Laine Bitencourt</span>
         <span class="brand__o">Advogada · OAB/GO 78.565</span>
       </span>
@@ -43,203 +40,145 @@ if(location.pathname==="/"&&m[location.hash]){location.replace(m[location.hash])
     </button>
     <nav class="nav" id="nav" aria-label="Principal">
       <ul>
-        <li><a href="/atuacao/">Áreas de atuação</a></li>
+        <li><a data-reveal href="/atuacao/">Áreas de atuação</a></li>
         <li><a href="/sobre/">Sobre</a></li>
         <li><a href="/contato/">Contato</a></li>
       </ul>
     </nav>
-    <a class="btn btn--wa wpp hd__cta" href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="menu_topo">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
-      WhatsApp
-    </a>
   </div>
 </header>
 
 <main id="main">
 
-  <section class="hero d hair">
-    <div class="hero__img">
-      <img src="/assets/img/laine.jpg" alt="Laine Bitencourt, advogada criminalista" width="1024" height="1536">
-    </div>
-    <div class="wrap hero__in">
-      <p class="kicker">Direito penal e processo penal</p>
-      <h1>Advogada criminalista em Goiânia e Aparecida de Goiânia</h1>
-      <p class="lede">Defesa em todas as fases do processo penal — do atendimento na delegacia ao julgamento.</p>
-      <div class="hero__btns">
-        <a class="btn wpp" href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="hero">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
-          Falar pelo WhatsApp
-        </a>
-        <a class="btn btn--ghost" href="tel:+5562992120065" data-contato="telefone" data-local="hero">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
-          Ligar (62) 99212-0065
-        </a>
+  <section class="hero wrap split">
+    <div class="stack" style="gap:20px;">
+      <p class="chip" data-reveal><span class="chip__d"></span><span>Goiânia · Aparecida de Goiânia</span></p>
+      <h1 data-reveal>Defesa criminal em <em>todas</em> as fases</h1>
+      <p class="lede prose" data-reveal>Do atendimento na delegacia ao julgamento.</p>
+
+      <div class="stack" style="gap:12px;padding-top:8px;" data-reveal>
+        <span class="cta"><a class="cta__b" href="https://wa.me/5562992120065?text=Ol%C3%A1%2C%20preciso%20de%20um%20atendimento" data-contato="whatsapp" data-local="hero"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg> Falar pelo WhatsApp</a></span>
+        <a class="btn-ghost" href="tel:+5562992120065" data-contato="telefone" data-local="hero"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7 12.8 12.8 0 0 0 .7 2.7 2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg> (62) 99212-0065</a>
       </div>
 
-      <aside class="urgent">
-        <p class="band__k">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></svg>
-          Alguém foi preso agora
-        </p>
-        <h2>As primeiras 24 horas decidem muita coisa</h2>
-        <p>O que acontece na delegacia, o que é a audiência de custódia e o que a família pode reunir enquanto isso.</p>
-        <a class="more" href="/atuacao/prisao-em-flagrante/">Ler a orientação completa
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </aside>
+      <p class="small" data-reveal style="padding-top:4px;">A mensagem chega a qualquer hora e é confirmada na hora. O retorno da advogada é feito em até 50 minutos.</p>
     </div>
+
+    <aside class="alert" data-reveal data-depth="1" style="margin-top:12px;">
+      <p class="alert__k"><span class="pulse"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></svg></span> Alguém foi preso agora</p>
+      <h2 style="margin-top:14px;font-size:clamp(23px,6.2vw,28px);">As primeiras 24 horas decidem muita coisa</h2>
+      <p style="margin-top:12px;">O que acontece na delegacia, o que é a audiência de custódia e o que a família pode reunir enquanto isso.</p>
+      <a class="more" style="margin-top:16px;" href="/atuacao/prisao-em-flagrante/">Ler a orientação completa <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </aside>
   </section>
 
-  <section class="promise">
-    <div class="wrap promise__in">
-      <div class="promise__i">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></svg>
-        <div>
-          <p><strong>A qualquer hora</strong></p>
-          <p>A mensagem pode ser enviada de madrugada, no fim de semana ou no feriado.</p>
-        </div>
-      </div>
-      <div class="promise__i">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-        <div>
-          <p><strong>Confirmada na hora</strong></p>
-          <p>Você recebe a confirmação de que a mensagem chegou.</p>
-        </div>
-      </div>
-      <div class="promise__i">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 1-9 9"/><path d="M3 3v5h5"/></svg>
-        <div>
-          <p><strong>Retorno em até 50 minutos</strong></p>
-          <p>O retorno é feito pela própria advogada.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="fuse fuse--01" aria-hidden="true"></div>
 
-  <section class="wrap sec cols">
-    <div class="cols__h">
-      <p class="eyebrow">Áreas de atuação</p>
-      <h2>Matéria penal, em todas as fases</h2>
-      <p class="muted">Cada página explica o que acontece naquela fase e o que a defesa faz nela.</p>
-      <a class="more" href="/atuacao/">Ver todas as áreas
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  <section class="z1 lazy" style="padding-block:0 clamp(44px,12vw,72px);">
+    <div class="wrap">
+      <p class="eyebrow" data-reveal style="padding-top:24px;">Áreas de atuação</p>
+      <h2 data-reveal style="margin-top:16px;">Matéria penal, em todas as fases</h2>
+      <div class="grid" style="display:flex;flex-direction:column;gap:14px;margin-top:26px;">
+      <a class="pane" data-reveal data-depth="3" href="/atuacao/prisao-em-flagrante/">
+        <span class="pane__top">
+          <span class="pane__n">01</span>
+          <span class="pane__go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <h3 style="margin-top:14px;">Prisão em flagrante</h3>
+        <p>O auto na delegacia e as 24 horas até a audiência de custódia.</p>
       </a>
-    </div>
-    <div>
-      <div class="idx">
-        <a href="/atuacao/prisao-em-flagrante/">
-          <span class="idx__n">01</span>
-          <span><span class="idx__t">Prisão em flagrante</span><span class="idx__d">O auto na delegacia e as 24 horas até a audiência de custódia.</span></span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </a>
-        <a href="/atuacao/audiencia-de-custodia/">
-          <span class="idx__n">02</span>
-          <span><span class="idx__t">Audiência de custódia</span><span class="idx__d">Quem participa, o que o juiz decide e em que prazo.</span></span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </a>
-        <a href="/atuacao/inquerito-policial/">
-          <span class="idx__n">03</span>
-          <span><span class="idx__t">Inquérito policial e depoimento</span><span class="idx__d">A apuração dos fatos antes do processo.</span></span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </a>
-        <a href="/atuacao/lei-de-drogas/">
-          <span class="idx__n">04</span>
-          <span><span class="idx__t">Lei de Drogas</span><span class="idx__d">Tráfico e uso: o que muda na acusação e na defesa.</span></span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-      <p class="small" style="margin-top:16px;">A advogada atua também em tribunal do júri, violência doméstica, crimes patrimoniais, crimes contra a pessoa, recursos e execução penal.</p>
-    </div>
-  </section>
-
-  <section class="about d d--2" style="margin-top:36px;">
-    <div class="about__in">
-      <div class="about__img">
-        <img src="/assets/img/laine.jpg" alt="" width="1024" height="1536">
-      </div>
-      <div class="about__c">
-        <p class="kicker">Sobre a advogada</p>
-        <h2>Quem responde do outro lado</h2>
-        <p>Laine Bitencourt é advogada inscrita na Ordem dos Advogados do Brasil, Seccional de Goiás, sob o nº 78.565. Atua em direito penal e processo penal, com atendimento em Goiânia e Aparecida de Goiânia.</p>
-        <dl class="facts">
-          <div><dt>Inscrição</dt><dd>OAB/GO 78.565</dd></div>
-          <div><dt>Atuação</dt><dd>Goiânia e Aparecida</dd></div>
-        </dl>
-        <a class="more" href="/sobre/">Conhecer a formação e a atuação
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap sec">
-    <p class="eyebrow">Orientações</p>
-    <h2 style="margin-top:14px;">Perguntas que as famílias fazem primeiro</h2>
-    <div class="idx" style="margin-top:18px;">
-      <a href="/atuacao/audiencia-de-custodia/">
-        <span class="idx__n">01</span>
-        <span><span class="idx__t">Como funciona a audiência de custódia</span><span class="idx__d">Quem participa, o que o juiz decide e em que prazo.</span></span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      <a class="pane" data-reveal data-depth="2" href="/atuacao/audiencia-de-custodia/">
+        <span class="pane__top">
+          <span class="pane__n">02</span>
+          <span class="pane__go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <h3 style="margin-top:14px;">Audiência de custódia</h3>
+        <p>Quem participa, o que o juiz decide e em que prazo.</p>
       </a>
+      <a class="pane" data-reveal data-depth="1" href="/atuacao/inquerito-policial/">
+        <span class="pane__top">
+          <span class="pane__n">03</span>
+          <span class="pane__go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <h3 style="margin-top:14px;">Inquérito policial</h3>
+        <p>A intimação para depor e o acompanhamento na delegacia.</p>
+      </a>
+      <a class="pane" data-reveal data-depth="1" href="/atuacao/lei-de-drogas/">
+        <span class="pane__top">
+          <span class="pane__n">04</span>
+          <span class="pane__go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <h3 style="margin-top:14px;">Lei de Drogas</h3>
+        <p>Tráfico e uso: o que muda na acusação e na defesa.</p>
+      </a>
+      </div>
+      <p class="small prose" data-reveal style="margin-top:22px;">A advogada atua também em tribunal do júri, violência doméstica, crimes patrimoniais, crimes contra a pessoa, recursos e execução penal.</p>
+      <a class="more" data-reveal style="margin-top:14px;" href="/atuacao/">Ver todas as áreas <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </section>
 
-  <section class="cta d d--2" style="margin-top:56px;">
-    <div class="wrap cta__in">
-      <div class="cta__t">
-        <p class="kicker">Falar com a advogada</p>
-        <h2>Descreva a situação em poucas linhas</h2>
-        <p>Quem precisa de defesa, em que cidade e o que aconteceu. Não é necessário — nem recomendável — detalhar o caso por mensagem antes do primeiro atendimento.</p>
+  <div class="fuse fuse--12" aria-hidden="true"></div>
+
+  <section class="z2 lazy" style="padding-block:0 clamp(44px,12vw,72px);">
+    <div class="wrap">
+      <div data-reveal data-depth="2" style="padding-top:24px;border-radius:var(--r);overflow:hidden;position:relative;border:1px solid var(--hair);">
+        <picture><source type="image/avif" srcset="/assets/img/laine-retrato-sm.avif 360w, /assets/img/laine-retrato.avif 900w" sizes="(min-width:768px) 420px, 100vw"><source type="image/webp" srcset="/assets/img/laine-retrato-sm.webp 360w, /assets/img/laine-retrato.webp 900w" sizes="(min-width:768px) 420px, 100vw"><img src="/assets/img/laine-retrato.jpg" alt="Retrato de Laine Bitencourt" width="900" height="900" loading="lazy" decoding="async" style="width:100%;filter:contrast(1.04) brightness(.88) saturate(.94);"></picture>
+        <div style="position:absolute;inset:0;background:linear-gradient(185deg,rgba(8,12,22,0) 40%,rgba(8,12,22,.94));"></div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;">
+          <p style="font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx);">Laine Bitencourt</p>
+          <p style="margin-top:6px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-lt);">Advogada · OAB/GO 78.565</p>
+        </div>
       </div>
-      <div class="cta__b">
-        <a class="chan wpp" href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="bloco_contato">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
-          <span><b>Falar pelo WhatsApp</b><span>Retorno em até 50 minutos</span></span>
-        </a>
-        <a class="chan chan--ghost" href="tel:+5562992120065" data-contato="telefone" data-local="bloco_contato">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
-          <span><b>Ligar (62) 99212-0065</b><span>Goiânia e Aparecida de Goiânia</span></span>
-        </a>
-      </div>
+      <h2 data-reveal style="margin-top:30px;">Sobre a advogada</h2>
+      <p class="lede prose" data-reveal style="margin-top:16px;">Inscrita na Ordem dos Advogados do Brasil, Seccional de Goiás, sob o nº 78.565. Atuação em direito penal e processo penal, em Goiânia e Aparecida de Goiânia.</p>
+      <a class="more" data-reveal style="margin-top:16px;" href="/sobre/">Conhecer a formação e a atuação <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </section>
 
+  <div class="fuse fuse--23" aria-hidden="true"></div>
+
+  <section class="z3 lazy" style="padding-block:0 clamp(48px,13vw,80px);">
+    <div class="wrap">
+      <div class="soft" data-contact-block data-reveal style="margin-top:24px;">
+        <h2>Falar com a advogada</h2>
+        <p class="lede" style="margin-top:14px;">Descreva a situação em poucas linhas: quem precisa de defesa, em que cidade e o que aconteceu.</p>
+        <div class="stack" style="gap:12px;margin-top:24px;">
+          <span class="cta"><a class="cta__b" href="https://wa.me/5562992120065?text=Ol%C3%A1%2C%20preciso%20de%20um%20atendimento" data-contato="whatsapp" data-local="bloco_contato"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg> Falar pelo WhatsApp</a></span>
+          <a class="btn-ghost" href="/contato/">Enviar mensagem pelo site</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer class="ft ft--d">
+<footer class="ft lazy">
   <div class="wrap ft__in">
-    <div class="ft__cols">
-      <div class="stack" style="gap:6px;">
-        <a class="ft__logo" href="/" aria-label="Laine Bitencourt — página inicial"><img src="/assets/img/logo-lockup.png" alt="Laine Bitencourt" width="1504" height="600"></a>
-        <p>Advogada · OAB/GO 78.565</p>
-        <p style="margin-top:10px;">Goiânia e Aparecida de Goiânia — Goiás</p>
-      </div>
-      <div class="stack" style="gap:8px;">
-        <p class="ft__k">Contato</p>
-        <p><a class="ft__tel" href="tel:+5562992120065" data-contato="telefone" data-local="rodape">(62) 99212-0065</a></p>
-        <p><a href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="rodape">WhatsApp</a></p>
-        <p><a href="mailto:adv.lainebitencourt@gmail.com" data-contato="email" data-local="rodape">adv.lainebitencourt@gmail.com</a></p>
-        <p><a href="https://instagram.com/lainebitencourt.adv" rel="me noopener">@lainebitencourt.adv</a></p>
-        <p class="small">Retorno de mensagens: em até 50 minutos</p>
-      </div>
-      <div class="stack" style="gap:8px;">
-        <p class="ft__k">Navegar</p>
-        <nav class="ft__nav" aria-label="Rodapé">
-          <a href="/atuacao/">Áreas de atuação</a>
-          <a href="/sobre/">Sobre</a>
-          <a href="/contato/">Contato</a>
-          <a href="/aviso-legal/">Aviso legal</a>
-          <a href="/politica-de-privacidade/">Política de privacidade</a>
-        </nav>
-      </div>
+    <div class="stack" style="gap:4px;">
+      <p class="ft__n">Laine Bitencourt</p>
+      <p>Advogada · OAB/GO 78.565</p>
     </div>
+    <div class="stack" style="gap:7px;">
+      <p><a href="tel:+5562992120065" data-contato="telefone" data-local="rodape">(62) 99212-0065</a></p>
+      <p><a href="mailto:adv.lainebitencourt@gmail.com" data-contato="email" data-local="rodape">adv.lainebitencourt@gmail.com</a></p>
+      <p>Goiânia e Aparecida de Goiânia — Goiás</p>
+      <p>Retorno de mensagens: em até 50 minutos</p>
+    </div>
+    <div class="ft__rule"></div>
+    <p><a href="https://www.instagram.com/lainebitencourt.adv/" rel="me noopener" target="_blank">@lainebitencourt.adv</a></p>
+    <nav class="ft__nav" aria-label="Rodapé">
+      <a data-reveal href="/atuacao/">Áreas de atuação</a>
+      <a href="/sobre/">Sobre</a>
+      <a href="/contato/">Contato</a>
+      <a href="/aviso-legal/">Aviso legal</a>
+      <a href="/politica-de-privacidade/">Política de privacidade</a>
+    </nav>
     <div class="ft__rule"></div>
     <p class="ft__legal">Este site tem caráter meramente informativo, nos termos do Provimento nº 205/2021 do Conselho Federal da OAB. As informações aqui publicadas não constituem consulta nem orientação jurídica sobre caso concreto.</p>
   </div>
 </footer>
 
 <nav class="bar" aria-label="Contato rápido">
-  <a class="w" href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="barra_fixa_mobile">
+  <a class="w" href="https://wa.me/5562992120065?text=Ol%C3%A1%2C%20preciso%20de%20um%20atendimento" data-contato="whatsapp" data-local="barra_fixa_mobile">
     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
     WhatsApp
   </a>
@@ -268,11 +207,12 @@ if(location.pathname==="/"&&m[location.hash]){location.replace(m[location.hash])
       "name":"Laine Bitencourt",
       "jobTitle":"Advogada",
       "url":"https://lainebitencourt.com.br/",
-      "image":"https://lainebitencourt.com.br/assets/img/laine.jpg",
+      "image":"https://lainebitencourt.com.br/assets/img/laine-retrato.jpg",
       "knowsAbout":["Direito penal","Processo penal","Prisão em flagrante","Audiência de custódia","Inquérito policial","Tribunal do Júri","Lei de Drogas","Violência doméstica","Execução penal"],
-      "email":"adv.lainebitencourt@gmail.com",
-      "sameAs":["https://instagram.com/lainebitencourt.adv"],
       "identifier":{"@type":"PropertyValue","name":"OAB/GO","value":"78.565"},
+      "email":"adv.lainebitencourt@gmail.com",
+      "telephone":"+5562992120065",
+      "sameAs":["https://www.instagram.com/lainebitencourt.adv/"],
       "areaServed":[{"@type":"City","name":"Goiânia"},{"@type":"City","name":"Aparecida de Goiânia"}]
     },
     {
