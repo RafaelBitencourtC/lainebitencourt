@@ -1,0 +1,10 @@
+# O site antigo era uma página só com âncoras. Nada indexado pode virar 404.
+/#sobre        /sobre/                          301
+/#atuacao      /atuacao/                        301
+/#servicos     /atuacao/                        301
+/#contato      /contato/                        301
+/#faq          /atuacao/prisao-em-flagrante/    301
+# Estas duas seções estão sendo DELETADAS por não conformidade (LAINE_02),
+# não realocadas. Vão para a home de propósito.
+/#resultados   /                                301
+/#depoimentos  /                                301

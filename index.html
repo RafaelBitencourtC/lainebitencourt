@@ -1,1099 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dra. Laine Bitencourt — Advogada Criminalista</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23C9A84C' d='M448 32H352V16a16 16 0 0 0-32 0v16H192V16a16 16 0 0 0-32 0v16H64A64 64 0 0 0 0 96v352a64 64 0 0 0 64 64h384a64 64 0 0 0 64-64V96a64 64 0 0 0-64-64Z'/%3E%3C/svg%3E">
-
-  <!-- Tailwind CSS v3 -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts: Cormorant Garamond + Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- Glide.js CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/css/glide.core.min.css">
-
-  <style>
-    :root {
-      --navy:      #0D1829;
-      --navy-alt:  #111E2F;
-      --navy-card: #162035;
-      --navy-line: #1E2E45;
-      --gold:      #C9A84C;
-      --gold-dim:  #a88635;
-    }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--navy);
-      color: #CBD5E1;
-      margin: 0;
-    }
-
-    h1, h2, h3, h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-    }
-
-    /* ── Brand colours ─────────────────────────── */
-    .bg-navy      { background-color: var(--navy); }
-    .bg-navy-alt  { background-color: var(--navy-alt); }
-    .bg-navy-card { background-color: var(--navy-card); }
-    .text-gold    { color: var(--gold); }
-    .bg-gold      { background-color: var(--gold); }
-    .border-gold  { border-color: var(--gold); }
-
-    /* ── Navbar ─────────────────────────────────── */
-    #header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 50;
-      transition: background-color .4s ease, box-shadow .4s ease;
-      background-color: transparent;
-    }
-    #header.nav-scrolled {
-      background-color: rgba(13,24,41,.97);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 2px 20px rgba(0,0,0,.5);
-    }
-
-    /* Hamburger lines */
-    .hline { display:block; width:24px; height:2px; background:#fff; transition:.3s; }
-    #header.menu-open .b1 { transform: rotate(45deg) translate(5px,6px); }
-    #header.menu-open .b2 { opacity:0; }
-    #header.menu-open .b3 { transform: rotate(-45deg) translate(5px,-6px); }
-
-    /* Mobile menu */
-    #mobile-menu {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height .4s ease;
-    }
-    #mobile-menu.open { max-height: 480px; }
-
-    /* ── Hero ───────────────────────────────────── */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(13,24,41,.93) 0%,
-        rgba(13,24,41,.70) 50%,
-        rgba(13,24,41,.28) 100%
-      );
-    }
-
-    /* ── Section label ──────────────────────────── */
-    .section-label {
-      display: inline-block;
-      font-family: 'Inter', sans-serif;
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,168,76,.35);
-      border-radius: 999px;
-      padding: .25rem .85rem;
-      margin-bottom: 1rem;
-    }
-
-    /* ── Gold divider ───────────────────────────── */
-    .gold-divider {
-      display: block;
-      width: 48px;
-      height: 2px;
-      background: var(--gold);
-      margin: .75rem 0 1.5rem;
-    }
-    .gold-divider.center { margin-left: auto; margin-right: auto; }
-
-    /* ── Scroll reveal ──────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(36px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-    .reveal.vis { opacity: 1; transform: none; }
-    .d1 { transition-delay: .08s; }
-    .d2 { transition-delay: .16s; }
-    .d3 { transition-delay: .24s; }
-    .d4 { transition-delay: .32s; }
-    .d5 { transition-delay: .40s; }
-    .d6 { transition-delay: .48s; }
-
-    /* ── Cards ──────────────────────────────────── */
-    .law-card {
-      background-color: var(--navy-card);
-      border: 1px solid var(--navy-line);
-      border-radius: .75rem;
-      padding: 2rem 1.75rem;
-      display: flex;
-      flex-direction: column;
-      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-    }
-    .law-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
-      border-color: rgba(201,168,76,.4);
-    }
-
-    /* ── Stat cards ─────────────────────────────── */
-    .stat-card {
-      background-color: var(--navy-alt);
-      border: 1px solid var(--navy-line);
-      border-radius: .75rem;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      transition: transform .3s ease, border-color .3s ease;
-    }
-    .stat-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(201,168,76,.4);
-    }
-
-    /* ── CTA buttons ────────────────────────────── */
-    .btn-gold {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      background-color: var(--gold);
-      color: var(--navy);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: .85rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: .8rem 2rem;
-      border-radius: .5rem;
-      text-decoration: none;
-      transition: background-color .25s, box-shadow .25s, transform .25s;
-      cursor: pointer;
-      border: none;
-    }
-    .btn-gold:hover {
-      background-color: var(--gold-dim);
-      box-shadow: 0 8px 24px rgba(201,168,76,.35);
-      transform: translateY(-2px);
-    }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      border: 2px solid var(--gold);
-      color: var(--gold);
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: .85rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: .75rem 1.9rem;
-      border-radius: .5rem;
-      text-decoration: none;
-      transition: background-color .25s, color .25s, transform .25s;
-      cursor: pointer;
-      background-color: transparent;
-    }
-    .btn-outline:hover {
-      background-color: var(--gold);
-      color: var(--navy);
-      transform: translateY(-2px);
-    }
-
-    /* ── Trust strip ────────────────────────────── */
-    .trust-strip {
-      background-color: var(--navy-alt);
-      border-top: 1px solid var(--navy-line);
-      border-bottom: 1px solid var(--navy-line);
-    }
-
-    /* ── Testimonial ────────────────────────────── */
-    .testimonial-card {
-      background-color: var(--navy-card);
-      border: 1px solid var(--navy-line);
-      border-top: 3px solid var(--gold);
-      border-radius: .75rem;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .glide__arrow {
-      background-color: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.15);
-      color: #fff;
-      box-shadow: none;
-      text-shadow: none;
-    }
-    .glide__arrow:hover { background-color: var(--gold); color: var(--navy); }
-    .glide__arrow--left  { left: -1.4em; }
-    .glide__arrow--right { right: -1.4em; }
-    @media(max-width:768px) {
-      .glide__arrow { background-color: transparent; border: none; }
-      .glide__arrow--left  { left: .3em; }
-      .glide__arrow--right { right: .3em; }
-    }
-
-    /* ── FAQ ────────────────────────────────────── */
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .45s ease;
-    }
-    .faq-item.active .faq-answer { max-height: 600px; }
-    .faq-toggle-icon { transition: transform .3s ease; }
-    .faq-item.active .faq-toggle-icon { transform: rotate(45deg); }
-
-    /* ── Form inputs ────────────────────────────── */
-    .form-input {
-      width: 100%;
-      padding: .75rem 1rem;
-      background-color: var(--navy-alt);
-      border: 1px solid var(--navy-line);
-      border-radius: .5rem;
-      color: #e2e8f0;
-      font-family: 'Inter', sans-serif;
-      font-size: .95rem;
-      transition: border-color .25s;
-      outline: none;
-    }
-    .form-input:focus { border-color: var(--gold); }
-    .form-input::placeholder { color: #4b6080; }
-
-    /* ── WhatsApp float ─────────────────────────── */
-    .wa-float {
-      position: fixed;
-      bottom: 1.25rem;
-      right: 1.25rem;
-      z-index: 100;
-      width: 58px;
-      height: 58px;
-      background-color: #25D366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      color: #fff;
-      box-shadow: 0 4px 18px rgba(37,211,102,.4);
-      transition: transform .3s ease;
-      text-decoration: none;
-    }
-    .wa-float:hover { transform: scale(1.1); }
-    @media(max-width:767px) { .wa-float { display: none !important; } }
-
-    /* ── Mobile CTA bar ─────────────────────────── */
-    #mobile-cta-bar {
-      transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .35s ease;
-    }
-    #mobile-cta-bar.hide {
-      transform: translateY(120%);
-      opacity: 0;
-    }
-
-    /* ── Footer ─────────────────────────────────── */
-    footer a:hover { color: var(--gold); }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advogada criminalista em Goiânia — Laine Bitencourt</title>
+<meta name="description" content="Laine Bitencourt, advogada inscrita na OAB/GO sob o nº 78.565. Atuação em direito penal e processo penal, em todas as fases, em Goiânia e Aparecida de Goiânia.">
+<link rel="canonical" href="https://lainebitencourt.com.br/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lainebitencourt.com.br/">
+<meta property="og:title" content="Advogada criminalista em Goiânia — Laine Bitencourt">
+<meta property="og:description" content="Atuação em direito penal e processo penal, em todas as fases, em Goiânia e Aparecida de Goiânia.">
+<meta property="og:image" content="https://lainebitencourt.com.br/assets/img/og-default.jpg">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="/assets/js/consent.js"></script>
 </head>
-
 <body>
+<a class="skip" href="#main">Ir para o conteúdo</a>
 
-  <!-- WhatsApp config -->
-  <script>
-    const whatsappNumber  = "556282693382";
-    const whatsappMessage = "Olá, Dra. Laine! Gostaria de realizar uma consulta sobre um caso criminal. Como funciona?";
-    const whatsappLink    = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-  </script>
-
-  <!-- ══════════════════════════════════════════════
-       HEADER
-  ══════════════════════════════════════════════ -->
-  <header id="header">
-    <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
-      <!-- Logo -->
-      <a href="#home" class="flex items-center gap-4 no-underline">
-        <i class="fas fa-balance-scale text-3xl text-gold"></i>
-        <div>
-          <div class="text-white font-bold tracking-widest text-base leading-none" style="font-family:'Inter',sans-serif;">LAINE BITENCOURT</div>
-          <div class="text-xs tracking-widest uppercase mt-1" style="color:var(--gold);letter-spacing:.18em;">Advogada Criminalista</div>
-        </div>
-      </a>
-
-      <!-- Desktop nav -->
-      <nav class="hidden md:flex items-center gap-8 text-xs tracking-widest uppercase">
-        <a href="#sobre"       class="text-slate-300 hover:text-gold transition-colors no-underline" style="transition:color .2s">Sobre</a>
-        <a href="#atuacao"     class="text-slate-300 hover:text-gold transition-colors no-underline" style="transition:color .2s">Serviços</a>
-        <a href="#resultados"  class="text-slate-300 hover:text-gold transition-colors no-underline" style="transition:color .2s">Resultados</a>
-        <a href="#depoimentos" class="text-slate-300 hover:text-gold transition-colors no-underline" style="transition:color .2s">Depoimentos</a>
-        <a href="#contato"     class="text-slate-300 hover:text-gold transition-colors no-underline" style="transition:color .2s">Contato</a>
-        <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="btn-gold">
-          <i class="fab fa-whatsapp text-lg"></i>WhatsApp
-        </a>
-      </nav>
-
-      <!-- Hamburger -->
-      <button id="hamburger-btn" class="md:hidden flex flex-col gap-1.5 p-2 focus:outline-none" aria-label="Menu">
-        <span class="hline b1"></span>
-        <span class="hline b2"></span>
-        <span class="hline b3"></span>
-      </button>
-    </div>
-
-    <!-- Mobile dropdown -->
-    <div id="mobile-menu" style="background-color:rgba(13,24,41,.98);">
-      <a href="#sobre"       class="block text-center py-3 text-slate-300 text-sm uppercase tracking-widest hover:text-gold transition-colors no-underline" style="border-bottom:1px solid var(--navy-line)">Sobre</a>
-      <a href="#atuacao"     class="block text-center py-3 text-slate-300 text-sm uppercase tracking-widest hover:text-gold transition-colors no-underline" style="border-bottom:1px solid var(--navy-line)">Serviços</a>
-      <a href="#resultados"  class="block text-center py-3 text-slate-300 text-sm uppercase tracking-widest hover:text-gold transition-colors no-underline" style="border-bottom:1px solid var(--navy-line)">Resultados</a>
-      <a href="#depoimentos" class="block text-center py-3 text-slate-300 text-sm uppercase tracking-widest hover:text-gold transition-colors no-underline" style="border-bottom:1px solid var(--navy-line)">Depoimentos</a>
-      <a href="#faq"         class="block text-center py-3 text-slate-300 text-sm uppercase tracking-widest hover:text-gold transition-colors no-underline" style="border-bottom:1px solid var(--navy-line)">FAQ</a>
-      <a href="#contato"     class="block text-center py-3 text-slate-300 text-sm uppercase tracking-widest hover:text-gold transition-colors no-underline" style="border-bottom:1px solid var(--navy-line)">Contato</a>
-      <div class="p-4">
-        <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="btn-gold w-full justify-center">
-          <i class="fab fa-whatsapp text-xl"></i>Fale pelo WhatsApp
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <!-- ══════════════════════════════════════════════
-       HERO
-  ══════════════════════════════════════════════ -->
-  <section id="home" class="relative min-h-screen flex items-center">
-    <!-- Background image -->
-    <div class="absolute inset-0">
-      <img src="perfill.jpeg" alt="Dra. Laine Bitencourt" class="w-full h-full object-cover object-top">
-      <div class="hero-overlay"></div>
-    </div>
-
-    <!-- Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 py-32 md:py-0 w-full">
-      <div class="max-w-2xl">
-        <span class="section-label reveal">Advocacia Criminal</span>
-        <h1 class="text-5xl md:text-6xl lg:text-7xl text-white leading-tight reveal d1" style="font-weight:700;">
-          Sua <span class="text-gold">Liberdade</span><br>
-          Não Pode<br>
-          Esperar
-        </h1>
-        <span class="gold-divider reveal d2"></span>
-        <p class="text-lg md:text-xl text-slate-300 leading-relaxed mb-4 reveal d3">
-          Do primeiro sinal de problema às fases mais delicadas do processo, atuo com estratégia, firmeza e urgência para defender sua liberdade, sua reputação e sua tranquilidade.
-        </p>
-        <p class="text-base text-slate-400 leading-relaxed mb-10 reveal d4">
-          Se você está sendo investigado, processado ou preso, conte com uma advogada criminalista experiente, ágil e disponível 24 horas por dia.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 reveal d5">
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="btn-gold text-base py-4 px-8">
-            <i class="fab fa-whatsapp text-xl"></i>Fale Agora com a Advogada
-          </a>
-          <a href="#sobre" class="btn-outline text-base py-4 px-8">
-            Saiba Mais
-          </a>
-        </div>
-        <div class="flex items-center gap-2 mt-6 text-slate-400 text-sm reveal d6">
-          <i class="fas fa-clock text-gold"></i>
-          <span>Atendimento 24 horas por dia · OAB/GO 66.9999</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       TRUST STRIP
-  ══════════════════════════════════════════════ -->
-  <div class="trust-strip py-6">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="flex flex-wrap justify-center gap-x-10 gap-y-4 text-sm text-slate-400">
-        <span class="flex items-center gap-2"><i class="fas fa-trophy text-gold"></i>98% Taxa de Sucesso</span>
-        <span class="flex items-center gap-2"><i class="fas fa-briefcase text-gold"></i>+1.000 Casos Atuados</span>
-        <span class="flex items-center gap-2"><i class="fas fa-bolt text-gold"></i>+800 Atendimentos de Urgência</span>
-        <span class="flex items-center gap-2"><i class="fas fa-clock text-gold"></i>Disponível 24h</span>
-        <span class="flex items-center gap-2"><i class="fas fa-id-card text-gold"></i>OAB/GO 66.9999</span>
-      </div>
-    </div>
+<header class="hd">
+  <div class="wrap hd__in">
+    <a class="brand" href="/">
+      <span class="brand__n">Laine Bitencourt</span>
+      <span class="brand__o">Advogada · OAB/GO 78.565</span>
+    </a>
+    <button class="navbtn" type="button" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+      <span class="sr-only">Abrir menu</span>
+    </button>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <ul>
+        <li><a href="/atuacao/">Áreas de atuação</a></li>
+        <li><a href="/sobre/">Sobre</a></li>
+        <li><a href="/contato/">Contato</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
 
-  <!-- ══════════════════════════════════════════════
-       SOBRE
-  ══════════════════════════════════════════════ -->
-  <section id="sobre" class="py-24 md:py-32" style="background-color:var(--navy-alt);">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row items-center gap-16">
-        <!-- Photo -->
-        <div class="md:w-5/12 reveal">
-          <div class="relative">
-            <img src="about.jpg" alt="Dra. Laine Bitencourt"
-              class="w-full rounded-xl shadow-2xl object-cover"
-              style="max-height:540px;object-position:top;"
-              onerror="this.onerror=null;this.src='https://placehold.co/480x560/162035/C9A84C?text=Dra.+Laine';">
-            <div class="absolute -bottom-4 -right-4 rounded-xl px-6 py-4 text-center" style="background-color:var(--gold);">
-              <div class="text-3xl font-bold text-navy" style="font-family:'Cormorant Garamond',serif;color:var(--navy);">+10</div>
-              <div class="text-xs font-bold uppercase tracking-wide" style="color:var(--navy);">Anos de Experiência</div>
-            </div>
-          </div>
-        </div>
+<main id="main">
 
-        <!-- Text -->
-        <div class="md:w-7/12">
-          <span class="section-label reveal">Sobre a Advogada</span>
-          <h2 class="text-4xl md:text-5xl lg:text-6xl text-white leading-tight reveal d1">
-            Defesa Criminal com<br>
-            <em class="text-gold not-italic">Compromisso</em> e <em class="text-gold not-italic">Excelência</em>
-          </h2>
-          <span class="gold-divider reveal d2"></span>
-
-          <div class="space-y-4 text-slate-400 leading-relaxed reveal d3">
-            <p>A Dra. Laine Bitencourt é advogada criminalista com sólida formação e ampla experiência em Direito Penal e Processual Penal, atuando com seriedade, agilidade e absoluto profissionalismo em todas as fases do processo.</p>
-            <p>Reconhecida por sua postura firme e estratégica, tem alta taxa de sucesso na defesa de seus clientes, tanto em investigações quanto em ações penais complexas.</p>
-            <p>Comprometida com a justiça e a ética, oferece um atendimento personalizado, humano e eficiente, sempre focada em resultados concretos e na proteção dos direitos fundamentais.</p>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 reveal d4">
-            <div class="flex items-center gap-3">
-              <i class="fas fa-gavel text-gold text-lg w-5 text-center"></i>
-              <span class="text-slate-300 text-sm">Especialista em Tribunal do Júri</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <i class="fas fa-check-circle text-gold text-lg w-5 text-center"></i>
-              <span class="text-slate-300 text-sm">98% de casos bem-sucedidos</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <i class="fas fa-map-marker-alt text-gold text-lg w-5 text-center"></i>
-              <span class="text-slate-300 text-sm">Atuação em todo território nacional</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <i class="fas fa-id-card text-gold text-lg w-5 text-center"></i>
-              <span class="text-slate-300 text-sm">OAB/GO 66.9999</span>
-            </div>
-          </div>
-
-          <div class="mt-10 reveal d5">
-            <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="btn-gold">
-              <i class="fab fa-whatsapp text-xl"></i>Esclareça suas dúvidas
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       ÁREAS DE ATUAÇÃO
-  ══════════════════════════════════════════════ -->
-  <section id="atuacao" class="py-24 md:py-32 bg-navy">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <span class="section-label reveal">Especialidades</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl text-white reveal d1">Áreas de Atuação</h2>
-        <span class="gold-divider center reveal d2"></span>
-        <p class="text-slate-400 max-w-xl mx-auto leading-relaxed reveal d3">Defesa criminal completa em todas as fases do processo, do inquérito ao julgamento final.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="law-card reveal d1">
-          <i class="fas fa-building-shield text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Atendimento em Delegacia</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Acompanhamento em flagrantes e depoimentos, garantindo a proteção de seus direitos desde o início.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 2 -->
-        <div class="law-card reveal d2">
-          <i class="fas fa-gavel text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Audiências e Julgamentos</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Representação técnica e combativa em audiências de custódia, instrução e sessões de julgamento.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 3 -->
-        <div class="law-card reveal d3">
-          <i class="fas fa-pills text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Lei de Drogas</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Atuação em casos de tráfico, associação para o tráfico e posse de entorpecentes para uso pessoal.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 4 -->
-        <div class="law-card reveal d1">
-          <i class="fas fa-search text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Inquérito e Investigação</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Defesa estratégica durante a fase de investigação policial, buscando o arquivamento do inquérito.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 5 -->
-        <div class="law-card reveal d2">
-          <i class="fas fa-users text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Tribunal do Júri</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Atuação especializada em plenário em crimes dolosos contra a vida, como homicídio e feminicídio, do inquérito ao julgamento.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 6 -->
-        <div class="law-card reveal d3">
-          <i class="fas fa-shield-heart text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Violência Doméstica</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Defesa em casos envolvendo a Lei Maria da Penha, atuando na defesa dos direitos do acusado ou da vítima.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 7 -->
-        <div class="law-card reveal d1">
-          <i class="fas fa-file-signature text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Execução Penal e Revisão</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Atuação para garantir benefícios na execução da pena, como progressão de regime e revisão criminal.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 8 -->
-        <div class="law-card reveal d2">
-          <i class="fas fa-hand-holding-dollar text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Crimes Patrimoniais</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Defesa em casos de roubo, furto, estelionato, apropriação indébita e receptação.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-        <!-- Card 9 -->
-        <div class="law-card reveal d3">
-          <i class="fas fa-heart-broken text-3xl text-gold mb-5"></i>
-          <h3 class="text-xl text-white mb-3">Crimes Contra a Integridade Física</h3>
-          <p class="text-slate-400 text-sm leading-relaxed flex-grow mb-5">Atuação em defesa da integridade física, abrangendo crimes como lesão corporal e vias de fato.</p>
-          <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="text-gold text-sm font-semibold hover:underline mt-auto">Atendimento via WhatsApp →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       RESULTADOS
-  ══════════════════════════════════════════════ -->
-  <section id="resultados" class="py-24 md:py-32" style="background-color:var(--navy-alt);">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <span class="section-label reveal">Números que Comprovam</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl text-white reveal d1">Resultados que Falam por Si</h2>
-        <span class="gold-divider center reveal d2"></span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="stats-grid">
-        <div class="stat-card reveal d1">
-          <i class="fas fa-trophy text-4xl text-gold mb-4"></i>
-          <p class="text-5xl font-bold text-gold mb-2" style="font-family:'Cormorant Garamond',serif;"><span class="count-up" data-target="98">0</span>%</p>
-          <h3 class="text-lg font-semibold text-white mb-2">Taxa de Sucesso</h3>
-          <p class="text-slate-400 text-sm">Em absolvições e resultados favoráveis aos clientes.</p>
-        </div>
-        <div class="stat-card reveal d2">
-          <i class="fas fa-briefcase text-4xl text-gold mb-4"></i>
-          <p class="text-5xl font-bold text-gold mb-2" style="font-family:'Cormorant Garamond',serif;"><span class="count-up" data-target="1000">0</span>+</p>
-          <h3 class="text-lg font-semibold text-white mb-2">Casos Atuados</h3>
-          <p class="text-slate-400 text-sm">Defesas criminais realizadas com máxima dedicação e excelência.</p>
-        </div>
-        <div class="stat-card reveal d3">
-          <i class="fas fa-key text-4xl text-gold mb-4"></i>
-          <p class="text-5xl font-bold text-gold mb-2" style="font-family:'Cormorant Garamond',serif;"><span class="count-up" data-target="85">0</span>%</p>
-          <h3 class="text-lg font-semibold text-white mb-2">Liberdade Provisória</h3>
-          <p class="text-slate-400 text-sm">De sucesso em pedidos de soltura imediata para nossos clientes.</p>
-        </div>
-        <div class="stat-card reveal d1">
-          <i class="fas fa-balance-scale-right text-4xl text-gold mb-4"></i>
-          <p class="text-5xl font-bold text-gold mb-2" style="font-family:'Cormorant Garamond',serif;"><span class="count-up" data-target="80">0</span>%</p>
-          <h3 class="text-lg font-semibold text-white mb-2">Redução de Pena</h3>
-          <p class="text-slate-400 text-sm">Ou conversão para medidas alternativas mais brandas.</p>
-        </div>
-        <div class="stat-card reveal d2">
-          <i class="fas fa-bolt text-4xl text-gold mb-4"></i>
-          <p class="text-5xl font-bold text-gold mb-2" style="font-family:'Cormorant Garamond',serif;"><span class="count-up" data-target="800">0</span>+</p>
-          <h3 class="text-lg font-semibold text-white mb-2">Atendimentos de Urgência</h3>
-          <p class="text-slate-400 text-sm">Em prisões em flagrante e audiências de custódia.</p>
-        </div>
-        <div class="stat-card reveal d3">
-          <i class="fas fa-clock text-4xl text-gold mb-4"></i>
-          <p class="text-5xl font-bold text-gold mb-2" style="font-family:'Cormorant Garamond',serif;"><span class="count-up" data-target="24">0</span>h</p>
-          <h3 class="text-lg font-semibold text-white mb-2">Atendimento Imediato</h3>
-          <p class="text-slate-400 text-sm">Resposta rápida para urgências, a qualquer hora do dia.</p>
-        </div>
-      </div>
-
-      <div class="text-center mt-16 reveal">
-        <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="btn-gold text-base py-4 px-10">
-          <i class="fab fa-whatsapp text-xl"></i>Fale Agora com a Advogada
+  <section class="wrap sec split" style="padding-top:32px;">
+    <div class="stack" style="gap:16px;">
+      <h1>Advogada criminalista em Goiânia e Aparecida de Goiânia</h1>
+      <p class="lede">Defesa em todas as fases do processo penal — do atendimento na delegacia ao julgamento.</p>
+      <div class="stack" style="gap:10px;padding-top:6px;">
+        <a class="btn btn--p" href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="hero">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+          Falar pelo WhatsApp
         </a>
-        <p class="text-slate-500 text-sm mt-4"><i class="fas fa-clock text-gold mr-2"></i>Atendimento 24 horas por dia</p>
+        <a class="btn btn--s" href="tel:+5562992120065" data-contato="telefone" data-local="hero">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+          Ligar (62) 99212-0065
+        </a>
+      </div>
+    </div>
+
+    <aside class="band" style="margin-top:4px;">
+      <p class="band__k" style="display:flex;align-items:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></svg>
+        Alguém foi preso agora
+      </p>
+      <h2 style="font-size:21px;margin-top:10px;">As primeiras 24 horas decidem muita coisa</h2>
+      <p style="margin-top:10px;color:var(--ink-2);">O que acontece na delegacia, o que é a audiência de custódia e o que a família pode reunir enquanto isso.</p>
+      <a class="more" href="/atuacao/prisao-em-flagrante/">Ler a orientação completa
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </aside>
+  </section>
+
+  <section class="wrap" style="padding-top:20px;">
+    <div class="card" style="display:flex;gap:12px;align-items:flex-start;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="1.6" stroke-linecap="round" style="flex-shrink:0;margin-top:4px;" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></svg>
+      <div class="stack" style="gap:3px;">
+        <p style="font-weight:600;">Como funciona o contato</p>
+        <p style="color:var(--ink-2);">A mensagem pode ser enviada a qualquer hora e é confirmada na hora.</p>
+        <p class="small">O retorno da advogada é feito em até 50 minutos.</p>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       DEPOIMENTOS
-  ══════════════════════════════════════════════ -->
-  <section id="depoimentos" class="py-24 md:py-32 bg-navy">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <span class="section-label reveal">Clientes</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl text-white reveal d1">O que Dizem os Clientes</h2>
-        <span class="gold-divider center reveal d2"></span>
-      </div>
+  <section class="wrap sec">
+    <p class="eyebrow">Áreas de atuação</p>
+    <h2 style="margin-top:14px;">Matéria penal, em todas as fases</h2>
+    <div class="rows" style="margin-top:18px;">
+      <a href="/atuacao/prisao-em-flagrante/">Prisão em flagrante<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/atuacao/audiencia-de-custodia/">Audiência de custódia<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/atuacao/inquerito-policial/">Inquérito policial e depoimento<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/atuacao/lei-de-drogas/">Lei de Drogas<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+    </div>
+  </section>
 
-      <div class="glide max-w-5xl mx-auto reveal">
-        <div class="glide__track" data-glide-el="track">
-          <ul class="glide__slides">
-            <li class="glide__slide">
-              <div class="testimonial-card">
-                <i class="fas fa-quote-left text-gold text-2xl mb-4"></i>
-                <p class="text-slate-400 italic flex-grow leading-relaxed">"Desde o primeiro contato na delegacia até o final do processo, a Dra. demonstrou um <strong class="text-white not-italic font-semibold">profissionalismo ímpar</strong>. <strong class="text-white not-italic font-semibold">Recomendo de olhos fechados</strong>."</p>
-                <p class="text-right mt-6 font-semibold text-white text-sm">— L. C. Machado</p>
-              </div>
-            </li>
-            <li class="glide__slide">
-              <div class="testimonial-card">
-                <i class="fas fa-quote-left text-gold text-2xl mb-4"></i>
-                <p class="text-slate-400 italic flex-grow leading-relaxed">"Uma advogada que <strong class="text-white not-italic font-semibold">realmente luta pelo cliente</strong>. Transparente, honesta e incansável na busca pela justiça. <strong class="text-white not-italic font-semibold">Fez toda a diferença</strong> no meu caso."</p>
-                <p class="text-right mt-6 font-semibold text-white text-sm">— A. B. Bastos</p>
-              </div>
-            </li>
-            <li class="glide__slide">
-              <div class="testimonial-card">
-                <i class="fas fa-quote-left text-gold text-2xl mb-4"></i>
-                <p class="text-slate-400 italic flex-grow leading-relaxed">"Tive meu <strong class="text-white not-italic font-semibold">caso arquivado</strong> graças à <strong class="text-white not-italic font-semibold">atuação brilhante</strong> da Dra. Laine. Sua <strong class="text-white not-italic font-semibold">estratégia de defesa foi impecável</strong>. Sou muito grato."</p>
-                <p class="text-right mt-6 font-semibold text-white text-sm">— E. Gomes</p>
-              </div>
-            </li>
-            <li class="glide__slide">
-              <div class="testimonial-card">
-                <i class="fas fa-quote-left text-gold text-2xl mb-4"></i>
-                <p class="text-slate-400 italic flex-grow leading-relaxed">"Profissional extremamente <strong class="text-white not-italic font-semibold">competente e dedicada</strong>. A Dra. Laine foi <strong class="text-white not-italic font-semibold">essencial</strong> para a resolução do meu processo com um <strong class="text-white not-italic font-semibold">resultado positivo</strong>. Recomendo fortemente."</p>
-                <p class="text-right mt-6 font-semibold text-white text-sm">— J. Silva</p>
-              </div>
-            </li>
-            <li class="glide__slide">
-              <div class="testimonial-card">
-                <i class="fas fa-quote-left text-gold text-2xl mb-4"></i>
-                <p class="text-slate-400 italic flex-grow leading-relaxed">"Recebi um atendimento <strong class="text-white not-italic font-semibold">humano, sigiloso e muito técnico</strong>. Senti-me <strong class="text-white not-italic font-semibold">seguro e amparado</strong> durante todo o processo. <strong class="text-white not-italic font-semibold">Gratidão eterna</strong>."</p>
-                <p class="text-right mt-6 font-semibold text-white text-sm">— M. A. Pereira</p>
-              </div>
-            </li>
-            <li class="glide__slide">
-              <div class="testimonial-card">
-                <i class="fas fa-quote-left text-gold text-2xl mb-4"></i>
-                <p class="text-slate-400 italic flex-grow leading-relaxed">"A <strong class="text-white not-italic font-semibold">agilidade e o conhecimento técnico</strong> da Dra. foram <strong class="text-white not-italic font-semibold">impressionantes</strong>. Conseguiu minha <strong class="text-white not-italic font-semibold">liberdade em tempo recorde</strong>. Não tenho palavras para agradecer."</p>
-                <p class="text-right mt-6 font-semibold text-white text-sm">— R. S. Ferreira</p>
-              </div>
-            </li>
-          </ul>
+  <section style="margin-top:36px;padding:32px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="wrap stack" style="gap:16px;">
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div style="width:76px;height:92px;border-radius:3px;background:var(--empty);border:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B9B3A7" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>
         </div>
-        <div class="glide__arrows" data-glide-el="controls">
-          <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><i class="fas fa-chevron-left"></i></button>
-          <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><i class="fas fa-chevron-right"></i></button>
+        <div class="stack" style="gap:5px;">
+          <h2 style="font-size:23px;">Sobre a advogada</h2>
+          <p class="small"><!-- TODO: substituir por assets/img/laine.webp, com width/height explícitos -->Retrato a ser fornecido</p>
         </div>
+      </div>
+      <p class="prose" style="color:var(--ink-2);">Laine Bitencourt é advogada inscrita na Ordem dos Advogados do Brasil, Seccional de Goiás, sob o nº 78.565. Atua em direito penal e processo penal, com atendimento em Goiânia e Aparecida de Goiânia.</p>
+      <a class="more" href="/sobre/">Conhecer a formação e a atuação
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <p class="eyebrow">Orientações</p>
+    <h2 style="margin-top:14px;">Perguntas que as famílias fazem primeiro</h2>
+    <div class="grid-3" style="margin-top:18px;">
+      <a class="card" href="/atuacao/audiencia-de-custodia/">
+        <span style="font-family:var(--serif);font-size:18.5px;font-weight:600;color:var(--ink);line-height:1.3;display:block;">Como funciona a audiência de custódia</span>
+        <span class="small" style="display:block;margin-top:6px;">Quem participa, o que o juiz decide e em que prazo.</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <div class="soft stack" style="gap:14px;">
+      <h2 style="font-size:23px;">Falar com a advogada</h2>
+      <p style="color:var(--ink-2);">Descreva a situação em poucas linhas: quem precisa de defesa, em que cidade e o que aconteceu.</p>
+      <div class="stack" style="gap:9px;padding-top:2px;">
+        <a class="btn btn--p" href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="bloco_contato">Falar pelo WhatsApp</a>
+        <a class="btn btn--w" href="/contato/">Enviar mensagem pelo site</a>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       FAQ
-  ══════════════════════════════════════════════ -->
-  <section id="faq" class="py-24 md:py-32" style="background-color:var(--navy-alt);">
-    <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <span class="section-label reveal">Dúvidas Comuns</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl text-white reveal d1">Perguntas Frequentes</h2>
-        <span class="gold-divider center reveal d2"></span>
-      </div>
+</main>
 
-      <div class="space-y-3 reveal d3">
-        <!-- FAQ 1 -->
-        <div class="faq-item rounded-xl overflow-hidden" style="background-color:var(--navy-card);border:1px solid var(--navy-line);">
-          <button class="faq-question w-full flex justify-between items-center text-left p-6 focus:outline-none">
-            <span class="text-base font-semibold text-white pr-4">Fui preso em flagrante, o que fazer?</span>
-            <i class="fas fa-plus text-gold faq-toggle-icon flex-shrink-0"></i>
-          </button>
-          <div class="faq-answer">
-            <p class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">Mantenha a calma e exerça seu direito de permanecer em silêncio. Não diga nada que possa ser usado contra você. Peça para contatar seu advogado imediatamente. A presença de um advogado criminalista desde o primeiro momento é crucial para garantir que seus direitos sejam respeitados e para traçar a melhor estratégia de defesa.</p>
-          </div>
-        </div>
-        <!-- FAQ 2 -->
-        <div class="faq-item rounded-xl overflow-hidden" style="background-color:var(--navy-card);border:1px solid var(--navy-line);">
-          <button class="faq-question w-full flex justify-between items-center text-left p-6 focus:outline-none">
-            <span class="text-base font-semibold text-white pr-4">Preciso de um advogado para ir à delegacia?</span>
-            <i class="fas fa-plus text-gold faq-toggle-icon flex-shrink-0"></i>
-          </button>
-          <div class="faq-answer">
-            <p class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">Sim, é altamente recomendável. Mesmo que você seja chamado apenas como testemunha, a situação pode mudar. Um advogado garante que você não seja coagido, que seu depoimento seja tomado corretamente e que você não se incrimine acidentalmente. Ter a orientação certa desde o início pode evitar que um problema simples se torne complexo.</p>
-          </div>
-        </div>
-        <!-- FAQ 3 -->
-        <div class="faq-item rounded-xl overflow-hidden" style="background-color:var(--navy-card);border:1px solid var(--navy-line);">
-          <button class="faq-question w-full flex justify-between items-center text-left p-6 focus:outline-none">
-            <span class="text-base font-semibold text-white pr-4">Quanto tempo uma pessoa pode ficar presa preventivamente?</span>
-            <i class="fas fa-plus text-gold faq-toggle-icon flex-shrink-0"></i>
-          </button>
-          <div class="faq-answer">
-            <p class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">A prisão preventiva não tem um prazo máximo fixado em lei, mas deve ser reavaliada a cada 90 dias. Um advogado criminalista competente atua constantemente para revogar a prisão, demonstrando ao juiz que ela não é mais necessária e buscando medidas alternativas, como a liberdade provisória. A escolha do advogado é determinante para a agilidade desse processo.</p>
-          </div>
-        </div>
-        <!-- FAQ 4 -->
-        <div class="faq-item rounded-xl overflow-hidden" style="background-color:var(--navy-card);border:1px solid var(--navy-line);">
-          <button class="faq-question w-full flex justify-between items-center text-left p-6 focus:outline-none">
-            <span class="text-base font-semibold text-white pr-4">Fui acusado de um crime que não cometi, e agora?</span>
-            <i class="fas fa-plus text-gold faq-toggle-icon flex-shrink-0"></i>
-          </button>
-          <div class="faq-answer">
-            <p class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">Este é o momento de agir rápido e contratar um especialista. Um advogado criminalista irá reunir provas da sua inocência, como álibis, testemunhas e documentos, e apresentá-las de forma estratégica no inquérito e no processo. A defesa técnica de qualidade é sua maior arma para provar a verdade e proteger sua reputação.</p>
-          </div>
-        </div>
-        <!-- FAQ 5 -->
-        <div class="faq-item rounded-xl overflow-hidden" style="background-color:var(--navy-card);border:1px solid var(--navy-line);">
-          <button class="faq-question w-full flex justify-between items-center text-left p-6 focus:outline-none">
-            <span class="text-base font-semibold text-white pr-4">Fui pego com uma pequena quantidade de droga. Serei preso por tráfico?</span>
-            <i class="fas fa-plus text-gold faq-toggle-icon flex-shrink-0"></i>
-          </button>
-          <div class="faq-answer">
-            <p class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">Não necessariamente. A lei diferencia usuário de traficante, mas a interpretação da autoridade policial é decisiva. A quantidade, o local e as circunstâncias da apreensão são analisados. Um advogado criminalista é fundamental para apresentar os argumentos corretos e lutar pela desclassificação para uso pessoal, evitando um processo por tráfico.</p>
-          </div>
-        </div>
-        <!-- FAQ 6 -->
-        <div class="faq-item rounded-xl overflow-hidden" style="background-color:var(--navy-card);border:1px solid var(--navy-line);">
-          <button class="faq-question w-full flex justify-between items-center text-left p-6 focus:outline-none">
-            <span class="text-base font-semibold text-white pr-4">Fui acusado com base na Lei Maria da Penha. Quais são meus direitos?</span>
-            <i class="fas fa-plus text-gold faq-toggle-icon flex-shrink-0"></i>
-          </button>
-          <div class="faq-answer">
-            <p class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">Acusações sob a Lei Maria da Penha podem resultar em medidas protetivas de urgência e processo criminal. Você tem o direito de apresentar sua versão dos fatos, produzir provas e ter uma defesa técnica completa. É primordial contratar um advogado especialista que atue rapidamente para contestar as acusações e garantir que seus direitos sejam plenamente defendidos.</p>
-          </div>
-        </div>
-        <!-- FAQ 7 -->
-        <div class="faq-item rounded-xl overflow-hidden" style="background-color:var(--navy-card);border:1px solid var(--navy-line);">
-          <button class="faq-question w-full flex justify-between items-center text-left p-6 focus:outline-none">
-            <span class="text-base font-semibold text-white pr-4">Qual a diferença entre um advogado "geral" e um criminalista?</span>
-            <i class="fas fa-plus text-gold faq-toggle-icon flex-shrink-0"></i>
-          </button>
-          <div class="faq-answer">
-            <p class="px-6 pb-6 text-slate-400 text-sm leading-relaxed">Assim como um médico cardiologista é especialista em coração, um advogado criminalista é focado exclusivamente na área criminal. Ele tem profundo conhecimento das leis penais, do funcionamento das delegacias, fóruns e dos entendimentos dos juízes. Essa especialização aumenta drasticamente as chances de sucesso. Sua liberdade não pode ser tratada por um generalista.</p>
-          </div>
-        </div>
-      </div>
+<footer class="ft">
+  <div class="wrap ft__in">
+    <div class="stack" style="gap:4px;">
+      <p class="ft__n">Laine Bitencourt</p>
+      <p>Advogada · OAB/GO 78.565</p>
     </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       CONTATO
-  ══════════════════════════════════════════════ -->
-  <section id="contato" class="py-24 md:py-32 bg-navy">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <span class="section-label reveal">Fale Conosco</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl text-white reveal d1">Entre em Contato</h2>
-        <span class="gold-divider center reveal d2"></span>
-        <p class="text-slate-400 max-w-xl mx-auto leading-relaxed reveal d3">Para urgências, o contato via WhatsApp é recomendado. Se preferir, preencha o formulário abaixo.</p>
-      </div>
-
-      <div class="flex flex-col md:flex-row gap-12 max-w-5xl mx-auto">
-        <!-- Contact info -->
-        <div class="md:w-5/12 reveal">
-          <div class="space-y-6">
-            <div>
-              <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="btn-gold w-full justify-center text-base py-4">
-                <i class="fab fa-whatsapp text-xl"></i>Fale Agora com a Advogada
-              </a>
-              <p class="text-center text-slate-500 text-sm mt-3"><i class="fas fa-clock text-gold mr-1"></i>Atendimento 24 horas por dia</p>
-            </div>
-
-            <div style="border-top:1px solid var(--navy-line);padding-top:1.5rem;">
-              <p class="text-slate-400 text-sm mb-2">Ou ligue agora:</p>
-              <a href="tel:+556282693382" class="text-2xl font-bold text-white hover:text-gold transition-colors no-underline" style="font-family:'Cormorant Garamond',serif;">(62) 8269-3382</a>
-            </div>
-
-            <div style="border-top:1px solid var(--navy-line);padding-top:1.5rem;" class="space-y-4 text-sm text-slate-400">
-              <div class="flex items-start gap-3">
-                <i class="fas fa-map-marker-alt text-gold mt-0.5"></i>
-                <span>Seu endereço completo<br>Cidade, Estado</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <i class="fas fa-envelope text-gold"></i>
-                <a href="mailto:seuemail@exemplo.com" class="hover:text-gold transition-colors no-underline">seuemail@exemplo.com</a>
-              </div>
-              <div class="flex items-center gap-3">
-                <i class="fas fa-id-card text-gold"></i>
-                <span>OAB/GO 66.9999</span>
-              </div>
-            </div>
-
-            <div class="flex gap-3" style="border-top:1px solid var(--navy-line);padding-top:1.5rem;">
-              <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="inline-flex items-center justify-center w-10 h-10 rounded-full text-slate-400 hover:text-gold hover:border-gold transition-colors" style="border:1px solid var(--navy-line);" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-              <a href="#" class="inline-flex items-center justify-center w-10 h-10 rounded-full text-slate-400 hover:text-gold transition-colors" style="border:1px solid var(--navy-line);" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-              <a href="tel:+556282693382" class="inline-flex items-center justify-center w-10 h-10 rounded-full text-slate-400 hover:text-gold transition-colors" style="border:1px solid var(--navy-line);" aria-label="Telefone"><i class="fas fa-phone"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Form -->
-        <div class="md:w-7/12 reveal d2">
-          <form id="contact-form" action="https://formspree.io/f/xyzpkkgl" method="POST" class="space-y-5">
-            <div id="form-message" class="text-center text-sm"></div>
-            <div>
-              <label for="name" class="block text-slate-300 text-sm mb-2">Nome</label>
-              <input type="text" id="name" name="name" required class="form-input" placeholder="Seu nome completo">
-            </div>
-            <div>
-              <label for="email" class="block text-slate-300 text-sm mb-2">E-mail</label>
-              <input type="email" id="email" name="email" required class="form-input" placeholder="seu@email.com">
-            </div>
-            <div>
-              <label for="phone" class="block text-slate-300 text-sm mb-2">Telefone</label>
-              <input type="tel" id="phone" name="phone" required class="form-input" placeholder="(62) 9 0000-0000">
-            </div>
-            <div>
-              <label for="message" class="block text-slate-300 text-sm mb-2">Mensagem</label>
-              <textarea id="message" name="message" rows="5" required class="form-input" placeholder="Descreva brevemente o seu caso..."></textarea>
-            </div>
-            <button type="submit" class="btn-gold w-full justify-center text-base py-4">
-              <i class="fas fa-paper-plane"></i>Enviar Mensagem
-            </button>
-          </form>
-        </div>
-      </div>
+    <div class="stack" style="gap:7px;">
+      <p><a href="tel:+5562992120065" data-contato="telefone" data-local="rodape">(62) 99212-0065</a></p>
+      <p>Goiânia e Aparecida de Goiânia — Goiás</p>
+      <p>Retorno de mensagens: em até 50 minutos</p>
     </div>
-  </section>
+    <div class="ft__rule"></div>
+    <nav class="ft__nav" aria-label="Rodapé">
+      <a href="/atuacao/">Áreas de atuação</a>
+      <a href="/sobre/">Sobre</a>
+      <a href="/contato/">Contato</a>
+      <a href="/aviso-legal/">Aviso legal</a>
+      <a href="/politica-de-privacidade/">Política de privacidade</a>
+    </nav>
+    <div class="ft__rule"></div>
+    <p class="ft__legal">Este site tem caráter meramente informativo, nos termos do Provimento nº 205/2021 do Conselho Federal da OAB. As informações aqui publicadas não constituem consulta nem orientação jurídica sobre caso concreto.</p>
+  </div>
+</footer>
 
-  <!-- ══════════════════════════════════════════════
-       FOOTER
-  ══════════════════════════════════════════════ -->
-  <footer class="py-16" style="background-color:var(--navy-alt);border-top:1px solid var(--navy-line);">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-        <!-- Identity -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-4">
-            <i class="fas fa-balance-scale text-3xl text-gold"></i>
-            <div>
-              <div class="text-white font-bold tracking-widest text-base" style="font-family:'Inter',sans-serif;">LAINE BITENCOURT</div>
-              <div class="text-xs tracking-widest uppercase mt-1" style="color:var(--gold);">Advogada Criminalista</div>
-            </div>
-          </div>
-          <p class="text-slate-500 text-sm leading-relaxed">Advocacia Criminal Estratégica, focada na defesa incansável dos seus direitos e da sua liberdade.</p>
-          <p class="text-slate-400 text-sm font-semibold">OAB/GO 66.9999</p>
-        </div>
-
-        <!-- Navigation -->
-        <div>
-          <h4 class="text-white font-semibold tracking-wide mb-5 text-sm uppercase">Navegação</h4>
-          <ul class="space-y-3 text-sm text-slate-500">
-            <li><a href="#sobre"       class="hover:text-gold transition-colors no-underline">Sobre Mim</a></li>
-            <li><a href="#atuacao"     class="hover:text-gold transition-colors no-underline">Serviços</a></li>
-            <li><a href="#resultados"  class="hover:text-gold transition-colors no-underline">Resultados</a></li>
-            <li><a href="#depoimentos" class="hover:text-gold transition-colors no-underline">Depoimentos</a></li>
-            <li><a href="#faq"         class="hover:text-gold transition-colors no-underline">Perguntas Frequentes</a></li>
-            <li><a href="#contato"     class="hover:text-gold transition-colors no-underline">Contato</a></li>
-          </ul>
-        </div>
-
-        <!-- Contact -->
-        <div>
-          <h4 class="text-white font-semibold tracking-wide mb-5 text-sm uppercase">Contato</h4>
-          <div class="space-y-3 text-sm text-slate-500">
-            <p class="flex items-start gap-3">
-              <i class="fas fa-map-marker-alt text-gold mt-0.5"></i>
-              <span>Seu endereço completo<br>Cidade, Estado</span>
-            </p>
-            <p class="flex items-center gap-3">
-              <i class="fas fa-phone text-gold"></i>
-              <a href="tel:+556282693382" class="hover:text-gold transition-colors no-underline">(62) 8269-3382</a>
-            </p>
-            <p class="flex items-center gap-3">
-              <i class="fas fa-envelope text-gold"></i>
-              <a href="mailto:seuemail@exemplo.com" class="hover:text-gold transition-colors no-underline">seuemail@exemplo.com</a>
-            </p>
-          </div>
-          <div class="flex gap-3 mt-6">
-            <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="inline-flex items-center justify-center w-9 h-9 rounded-full text-slate-500 hover:text-gold transition-colors" style="border:1px solid var(--navy-line);" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" class="inline-flex items-center justify-center w-9 h-9 rounded-full text-slate-500 hover:text-gold transition-colors" style="border:1px solid var(--navy-line);" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="tel:+556282693382" class="inline-flex items-center justify-center w-9 h-9 rounded-full text-slate-500 hover:text-gold transition-colors" style="border:1px solid var(--navy-line);" aria-label="Telefone"><i class="fas fa-phone"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div style="border-top:1px solid var(--navy-line);padding-top:2rem;" class="text-center text-slate-600 text-sm">
-        <p>© <span id="year"></span> Dra. Laine Bitencourt. Todos os direitos reservados.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- WhatsApp float (desktop) -->
-  <a href="#" onclick="window.open(whatsappLink,'_blank');return false;" class="wa-float" aria-label="WhatsApp">
-    <i class="fab fa-whatsapp"></i>
+<nav class="bar" aria-label="Contato rápido">
+  <a class="w" href="https://wa.me/5562992120065" data-contato="whatsapp" data-local="barra_fixa_mobile">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-3.9-.9L3 21l1.9-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+    WhatsApp
   </a>
+  <a class="t" href="tel:+5562992120065" data-contato="telefone" data-local="barra_fixa_mobile">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>
+    Ligar
+  </a>
+</nav>
 
-  <!-- Mobile CTA Bar -->
-  <div id="mobile-cta-bar"
-    class="fixed bottom-0 inset-x-0 z-50 md:hidden px-4 py-3"
-    style="background-color:var(--navy-alt);border-top:1px solid var(--navy-line);box-shadow:0 -4px 24px rgba(0,0,0,.5);"
-    role="complementary" aria-label="Contato rápido">
-    <div class="flex gap-3 max-w-sm mx-auto">
-      <a href="tel:+556282693382"
-        class="flex-1 inline-flex items-center justify-center gap-2 font-semibold text-sm py-3 rounded-xl transition-all active:scale-95"
-        style="border:2px solid var(--gold);color:var(--gold);">
-        <i class="fas fa-phone text-sm"></i>Ligar Agora
-      </a>
-      <a href="#" onclick="window.open(whatsappLink,'_blank');return false;"
-        class="flex-1 inline-flex items-center justify-center gap-2 font-bold text-sm py-3 rounded-xl transition-all active:scale-95"
-        style="background-color:var(--gold);color:var(--navy);box-shadow:0 4px 15px rgba(201,168,76,.35);">
-        <i class="fab fa-whatsapp text-base"></i>WhatsApp
-      </a>
-    </div>
-  </div>
-  <div class="md:hidden" style="height:68px;" aria-hidden="true"></div>
-
-  <!-- Glide.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.6.0/glide.min.js"></script>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-
-    // ── Navbar transparency ──────────────────────
-    const header = document.getElementById('header');
-    const onScroll = () => {
-      header.classList.toggle('nav-scrolled', window.scrollY > 60);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    // ── Hamburger ────────────────────────────────
-    const hamburger = document.getElementById('hamburger-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      header.classList.toggle('menu-open');
-    });
-    document.querySelectorAll('#mobile-menu a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        header.classList.remove('menu-open');
-      });
-    });
-
-    // ── Smooth scroll ────────────────────────────
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', function(e) {
-        const id = this.getAttribute('href');
-        if (id && id.length > 1) {
-          e.preventDefault();
-          const el = document.querySelector(id);
-          if (el) {
-            const offset = header.offsetHeight;
-            window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
-          }
-        }
-      });
-    });
-
-    // ── Scroll reveal ────────────────────────────
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('vis');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // ── Count-up ─────────────────────────────────
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.count-up').forEach(counter => {
-            const target = +counter.dataset.target;
-            const duration = 1500;
-            const step = Math.max(1, Math.floor(duration / target));
-            let current = 0;
-            const timer = setInterval(() => {
-              current = Math.min(current + 1, target);
-              counter.textContent = current;
-              if (current >= target) clearInterval(timer);
-            }, step);
-          });
-          countObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    const statsGrid = document.getElementById('stats-grid');
-    if (statsGrid) countObserver.observe(statsGrid);
-
-    // ── FAQ accordion ────────────────────────────
-    document.querySelectorAll('.faq-item').forEach(item => {
-      item.querySelector('.faq-question').addEventListener('click', () => {
-        const active = document.querySelector('.faq-item.active');
-        if (active && active !== item) active.classList.remove('active');
-        item.classList.toggle('active');
-      });
-    });
-
-    // ── Glide carousel ───────────────────────────
-    const glideEl = document.querySelector('.glide');
-    if (glideEl) {
-      new Glide('.glide', {
-        type: 'carousel',
-        startAt: 0,
-        perView: 2,
-        gap: 24,
-        autoplay: 5000,
-        hoverpause: true,
-        breakpoints: { 768: { perView: 1 } }
-      }).mount();
+<!-- ===================================================================
+     JSON-LD — CAMINHO B (LAINE_04 §7): sem endereço.
+     B-3 está aberto. O endereço já aparece no perfil verificado do Google
+     (R. 115-K, 77, St. Sul), mas ninguém confirmou se o advogado sênior
+     concorda em publicá-lo sob o nome dela. Enquanto isso não for
+     confirmado, NÃO há nó LocalBusiness aqui.
+     Caminho A (Attorney + PostalAddress + openingHoursSpecification) está
+     em README.md e só entra depois da confirmação.
+     ================================================================== -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Person",
+      "@id":"https://lainebitencourt.com.br/#advogada",
+      "name":"Laine Bitencourt",
+      "jobTitle":"Advogada",
+      "url":"https://lainebitencourt.com.br/",
+      "image":"https://lainebitencourt.com.br/assets/img/laine.jpg",
+      "knowsAbout":["Direito penal","Processo penal","Prisão em flagrante","Audiência de custódia","Inquérito policial","Tribunal do Júri","Lei de Drogas","Violência doméstica","Execução penal"],
+      "identifier":{"@type":"PropertyValue","name":"OAB/GO","value":"78.565"},
+      "areaServed":[{"@type":"City","name":"Goiânia"},{"@type":"City","name":"Aparecida de Goiânia"}]
+    },
+    {
+      "@type":"ProfessionalService",
+      "@id":"https://lainebitencourt.com.br/#pratica",
+      "name":"Laine Bitencourt — Advocacia Criminal",
+      "url":"https://lainebitencourt.com.br/",
+      "telephone":"+5562992120065",
+      "areaServed":[{"@type":"City","name":"Goiânia"},{"@type":"City","name":"Aparecida de Goiânia"}],
+      "employee":{"@id":"https://lainebitencourt.com.br/#advogada"}
+    },
+    {
+      "@type":"WebPage",
+      "@id":"https://lainebitencourt.com.br/#webpage",
+      "url":"https://lainebitencourt.com.br/",
+      "name":"Advogada criminalista em Goiânia — Laine Bitencourt",
+      "inLanguage":"pt-BR",
+      "about":{"@id":"https://lainebitencourt.com.br/#pratica"}
     }
+  ]
+}
+</script>
 
-    // ── Copyright year ───────────────────────────
-    const yr = document.getElementById('year');
-    if (yr) yr.textContent = new Date().getFullYear();
-
-    // ── Contact form ─────────────────────────────
-    const form = document.getElementById('contact-form');
-    if (form) {
-      const msg = document.getElementById('form-message');
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        msg.textContent = 'Enviando...';
-        msg.style.color = '#94a3b8';
-        try {
-          const res = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          });
-          if (res.ok) {
-            msg.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
-            msg.style.color = '#4ade80';
-            form.reset();
-          } else {
-            msg.textContent = 'Ocorreu um erro ao enviar. Tente novamente.';
-            msg.style.color = '#f87171';
-          }
-        } catch {
-          msg.textContent = 'Ocorreu um erro ao enviar. Tente novamente.';
-          msg.style.color = '#f87171';
-        }
-      });
-    }
-
-    // ── Mobile CTA bar hide/show ──────────────────
-    const ctaBar = document.getElementById('mobile-cta-bar');
-    const contato = document.getElementById('contato');
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      const contatoTop = contato
-        ? contato.getBoundingClientRect().top + y - 200
-        : Infinity;
-      ctaBar.classList.toggle('hide', y < 100 || y > contatoTop);
-    }, { passive: true });
-
-  });
-  </script>
-
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

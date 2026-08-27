@@ -1,0 +1,174 @@
+/* =========================================================================
+   Laine Bitencourt — advocacia criminal
+   Single stylesheet. No framework, no build step, no third-party request.
+   Direction: "calmo e legível" (LAINE_04 §2).
+   ========================================================================= */
+
+/* --- Fontes -------------------------------------------------------------
+   Auto-hospedadas por exigência de LAINE_04 §5: zero requisições a terceiros
+   antes da primeira pintura, e nada a declarar à ANPD por conta de fontes.
+   Os .woff2 ainda NÃO estão neste repositório — ver assets/fonts/README.md.
+   Enquanto não estiverem, a pilha de fallback abaixo é o que renderiza.
+------------------------------------------------------------------------- */
+@font-face{font-family:'Source Serif 4';src:url('../fonts/source-serif-4-latin-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215;}
+@font-face{font-family:'Source Serif 4';src:url('../fonts/source-serif-4-latin-600.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215;}
+@font-face{font-family:'Source Sans 3';src:url('../fonts/source-sans-3-latin-400.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215;}
+@font-face{font-family:'Source Sans 3';src:url('../fonts/source-sans-3-latin-600.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215;}
+
+/* --- Tokens -------------------------------------------------------------
+   Espelham a prancha "Sistema visual" do canvas de design.
+------------------------------------------------------------------------- */
+:root{
+  --paper:#FAF8F4; --surface:#FFF; --ink:#1C1B18; --ink-2:#4A4741; --ink-3:#6E6A62;
+  --icon:#75706A; --line:#E4DFD5; --line-soft:#EFEBE3; --field-line:#B7B0A2; --empty:#EFEBE3;
+  --accent:#2E5647; --accent-deep:#22412F; --accent-soft:#EAF0EC; --accent-line:#C6D3CA;
+  --on-deep:#D8E2DA; --on-deep-mute:#A9BCB0; --deep-line:#3A5A48;
+  --clay:#F4ECE3; --clay-line:#DFCDB8; --clay-ink:#6B4523;
+  --ph-ink:#8A5A2B; --ph-bg:#FBF0E2; --ph-line:#D9A96B;
+  --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+  --wrap:1120px; --pad:20px; --radius:5px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16.5px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  padding-bottom:64px; /* espaço da barra fixa no telefone */
+}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;letter-spacing:-.01em;line-height:1.22;text-wrap:pretty;}
+h1{font-size:31px;} h2{font-size:25px;} h3{font-size:19px;line-height:1.3;}
+p{margin:0;text-wrap:pretty;}
+ul{margin:0;padding:0;list-style:none;}
+img{max-width:100%;height:auto;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{color:var(--accent-deep);text-decoration:underline;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:2px;}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--pad);}
+.stack{display:flex;flex-direction:column;}
+.skip{position:absolute;left:-9999px;}
+.skip:focus{left:var(--pad);top:8px;z-index:100;background:var(--accent);color:#fff;padding:12px 16px;border-radius:4px;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+/* Marcador de dado pendente. Visível de propósito: nada falso renderiza. */
+.ph{background:var(--ph-bg);color:var(--ph-ink);border-bottom:1px dashed var(--ph-line);padding:0 3px;font-weight:600;}
+.verify{background:var(--ph-bg);color:var(--ph-ink);border:1px dashed var(--ph-line);border-radius:3px;padding:2px 6px;font-size:14px;font-weight:600;}
+
+/* --- Cabeçalho ---------------------------------------------------------- */
+.hd{border-bottom:1px solid var(--line);background:var(--paper);}
+.hd__in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;}
+.brand{display:flex;flex-direction:column;gap:1px;color:var(--ink);}
+.brand:hover{text-decoration:none;}
+.brand__n{font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:-.01em;}
+.brand__o{font-size:12px;color:var(--ink-3);letter-spacing:.04em;text-transform:uppercase;}
+.navbtn{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:10px;background:none;border:0;cursor:pointer;}
+.navbtn span{display:block;height:1.5px;background:var(--ink);border-radius:2px;}
+.nav{display:none;}
+.nav[data-open="true"]{display:block;border-top:1px solid var(--line);padding:8px 0 16px;}
+.nav a{display:flex;align-items:center;min-height:48px;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line-soft);}
+
+/* --- Blocos ------------------------------------------------------------- */
+.sec{padding:36px 0 0;}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);}
+.lede{font-size:18px;line-height:1.6;color:var(--ink-2);}
+.muted{color:var(--ink-3);}
+.small{font-size:15px;line-height:1.6;color:var(--ink-3);}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
+.band{background:var(--clay);border:1px solid var(--clay-line);border-radius:var(--radius);padding:20px;}
+.band__k{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--clay-ink);}
+.soft{background:var(--accent-soft);border-radius:var(--radius);padding:24px 20px;}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 22px;border-radius:4px;font-size:17px;font-weight:600;border:1.5px solid transparent;cursor:pointer;}
+.btn:hover{text-decoration:none;}
+.btn--p{background:var(--accent);color:#fff;} .btn--p:hover{background:var(--accent-deep);color:#fff;}
+.btn--s{color:var(--accent);border-color:var(--accent);background:transparent;} .btn--s:hover{background:var(--accent-soft);color:var(--accent-deep);}
+.btn--w{background:var(--surface);color:var(--accent);border-color:var(--accent-line);}
+.more{display:inline-flex;align-items:center;gap:7px;min-height:44px;font-size:16.5px;font-weight:600;}
+
+.rows a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:14px 0;border-bottom:1px solid var(--line);font-size:17px;color:var(--ink);font-weight:500;}
+.rows a:hover{text-decoration:none;color:var(--accent);}
+.rows svg{flex-shrink:0;}
+
+/* --- Passo a passo ------------------------------------------------------ */
+.steps{counter-reset:s;}
+.step{display:flex;gap:14px;}
+.step__n{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.step__b{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:600;}
+.step__l{width:1.5px;flex-grow:1;background:var(--line);}
+.step__c{display:flex;flex-direction:column;gap:6px;padding-bottom:22px;}
+
+/* --- FAQ ---------------------------------------------------------------- */
+.faq details{border-top:1px solid var(--line);}
+.faq details:last-of-type{border-bottom:1px solid var(--line);}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:16px 0;font-size:17px;font-weight:600;cursor:pointer;list-style:none;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"+";font-size:22px;font-weight:400;color:var(--ink-3);flex-shrink:0;}
+.faq details[open] summary::after{content:"–";}
+.faq .a{padding:0 0 18px;color:var(--ink-2);}
+
+/* --- Formulário --------------------------------------------------------- */
+.f{display:flex;flex-direction:column;gap:16px;}
+.f__g{display:flex;flex-direction:column;gap:7px;}
+.f label{font-size:16px;font-weight:600;}
+.f input,.f textarea{
+  font-family:inherit;font-size:16.5px;color:var(--ink);
+  min-height:52px;padding:14px;background:var(--surface);
+  border:1px solid var(--field-line);border-radius:4px;width:100%;
+}
+.f textarea{min-height:128px;resize:vertical;line-height:1.6;}
+.f input::placeholder,.f textarea::placeholder{color:var(--ink-3);opacity:1;}
+.f input:focus,.f textarea:focus{border-color:var(--accent);border-width:1.5px;outline:none;box-shadow:0 0 0 3px rgba(46,86,71,.15);}
+.f input[aria-invalid="true"],.f textarea[aria-invalid="true"]{border-color:#A8503A;border-width:1.5px;}
+.f__err{font-size:15px;color:#8C3F2C;}
+.f__check{display:flex;gap:11px;align-items:flex-start;}
+.f__check input{width:24px;height:24px;min-height:24px;flex-shrink:0;margin-top:3px;accent-color:var(--accent);}
+.f__check label{font-size:15.5px;font-weight:400;line-height:1.55;color:var(--ink-2);}
+
+/* --- Rodapé ------------------------------------------------------------- */
+.ft{margin-top:36px;background:var(--accent-deep);color:var(--on-deep);}
+.ft__in{display:flex;flex-direction:column;gap:18px;padding:28px 0 32px;}
+.ft__n{font-family:var(--serif);font-size:19px;font-weight:600;color:#fff;}
+.ft a{color:var(--on-deep);}
+.ft__nav{display:flex;flex-wrap:wrap;gap:2px 18px;}
+.ft__nav a{display:inline-flex;align-items:center;min-height:44px;font-size:16px;}
+.ft__rule{height:1px;background:var(--deep-line);}
+.ft__legal{font-size:13.5px;line-height:1.6;color:var(--on-deep-mute);max-width:70ch;}
+
+/* --- Barra fixa de contato ---------------------------------------------- */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:1px;background:var(--line);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);}
+.bar a{flex:1 1 0;display:flex;align-items:center;justify-content:center;gap:8px;min-height:60px;font-size:16.5px;font-weight:600;}
+.bar a:hover{text-decoration:none;}
+.bar .w{background:var(--accent);color:#fff;} .bar .t{background:var(--surface);color:var(--accent);}
+
+/* --- Consentimento LGPD -------------------------------------------------- */
+.cc{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 24px rgba(0,0,0,.10);}
+.cc[hidden]{display:none;}
+.cc__in{display:flex;flex-direction:column;gap:14px;padding:20px 0 24px;}
+.cc__btns{display:flex;gap:10px;}
+/* Aceitar e Recusar com o MESMO peso visual — o Guia Orientativo da ANPD
+   sobre cookies veda dark patterns. Não alterar sem nova análise. */
+.cc__btns .btn{flex:1 1 0;min-height:50px;font-size:16px;padding:0 12px;}
+
+/* --- Desktop ------------------------------------------------------------ */
+@media (min-width:900px){
+  body{font-size:17px;padding-bottom:0;}
+  h1{font-size:52px;line-height:1.12;} h2{font-size:38px;} h3{font-size:21px;}
+  .lede{font-size:21px;}
+  .sec{padding:72px 0 0;}
+  .navbtn{display:none;}
+  .nav{display:block !important;}
+  .nav ul{display:flex;align-items:center;gap:30px;}
+  .nav a{min-height:44px;border:0;font-size:16px;font-weight:500;}
+  .bar{display:none;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;}
+  .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;}
+  .split{display:grid;grid-template-columns:7fr 5fr;gap:40px;align-items:start;}
+  .ft__in{padding:56px 0 40px;}
+  .cc__in{flex-direction:row;align-items:center;justify-content:space-between;gap:32px;}
+  .cc__btns{flex:0 0 auto;} .cc__btns .btn{min-width:150px;}
+  .prose{max-width:68ch;}
+}
+@media (max-width:899px){ .grid-3,.grid-2{display:flex;flex-direction:column;gap:12px;} }
+@media (prefers-reduced-motion:reduce){ *{animation:none !important;transition:none !important;} }
