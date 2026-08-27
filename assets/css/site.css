@@ -443,3 +443,23 @@ a:active .ico{background:rgba(230,196,133,.14);transform:scale(1.04);}
 .ft__cta .cta__b{min-height:58px;}
 .ft__cta .btn-ghost{border-color:var(--hair-gold);background:rgba(255,255,255,.04);}
 @media (min-width:768px){ .ft__cta{flex-direction:row;} .ft__cta>*{flex:1;} }
+
+/* ---- Ícones sociais e de contato --------------------------------------
+   Círculo vazado dourado, como no cartão de visitas dela. Só perfis
+   confirmados: o Instagram veio do próprio cartão digital. Não inventar
+   Facebook nem LinkedIn — link quebrado em rodapé de advogada é pior do
+   que ausência.
+------------------------------------------------------------------------ */
+.social{display:flex;align-items:center;gap:14px;}
+.social a{
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:52px;height:52px;border-radius:50%;
+  border:1px solid var(--hair-gold);color:var(--gold-lt);
+  background:rgba(230,196,133,.05);
+  transition:background var(--t1),transform var(--t2) var(--e),border-color var(--t1),color var(--t1);
+}
+.social a:active{background:var(--gold);border-color:var(--gold);color:#07080B;transform:scale(.94);}
+.social__h{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--tx-4);}
+@media (min-width:768px){
+  .social a:hover{background:var(--gold);border-color:var(--gold);color:#07080B;transform:translateY(-3px);}
+}
