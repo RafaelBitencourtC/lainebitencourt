@@ -15,6 +15,7 @@
 
   var LOCAIS = ['hero','barra_fixa_mobile','menu_topo','rodape','bloco_contato','pagina_atuacao','pagina_artigo'];
   var calmo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* usado so para diagnostico do parallax; NAO gate a revelacao */
   var scrollNativo = CSS && CSS.supports && CSS.supports('animation-timeline: view()');
 
   function pagina(){ return location.pathname; }
@@ -25,12 +26,19 @@
     if (typeof window.gtag === 'function') window.gtag('event', nome, params || {});
   }
 
-  /* --- revelação: só entra se o navegador NÃO tiver scroll-driven CSS --- */
+  /* --- revelação -------------------------------------------------------
+     SEMPRE por IntersectionObserver. Nao existe mais caminho de CSS
+     scroll-driven para revelacao: se este bloco nao rodar, o conteudo fica
+     invisivel. Foi exatamente o que aconteceu em 27/08/2026 — o JS saia
+     cedo quando o navegador suportava animation-timeline, mas o CSS
+     correspondente ja tinha sido removido, e o herei inteiro ficou em
+     opacity:0. Nao reintroduzir nenhuma condicao de saida aqui.
+  ------------------------------------------------------------------------ */
   (function () {
     var alvos = document.querySelectorAll('[data-reveal]');
     if (!alvos.length) return;
-    if (calmo || scrollNativo || !('IntersectionObserver' in window)){
-      if (!scrollNativo) Array.prototype.forEach.call(alvos, function(el){ el.classList.add('in'); });
+    if (calmo || !('IntersectionObserver' in window)){
+      Array.prototype.forEach.call(alvos, function(el){ el.classList.add('in'); });
       return;
     }
     var obs = new IntersectionObserver(function (es){
@@ -42,8 +50,21 @@
         e.target.classList.add('in');
         obs.unobserve(e.target);
       });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+    }, { threshold: 0 });
     Array.prototype.forEach.call(alvos, function(el){ obs.observe(el); });
+
+    /* Rede de seguranca. O rootMargin negativo que existia aqui encolhia a
+       raiz em 10% na base, entao qualquer elemento nos ultimos 10% do
+       documento nunca chegava a "entrar" — nem rolando ate o fim — e ficava
+       em opacity:0 para sempre. Aconteceu com o ultimo link de cada pagina.
+       Agora o threshold e 0 e, alem disso, tudo que continuar escondido
+       depois de 3s aparece de qualquer jeito: animacao nao vista e um
+       detalhe, texto nao lido nao e. */
+    setTimeout(function () {
+      Array.prototype.forEach.call(alvos, function (el) {
+        if (!el.classList.contains('in')) el.classList.add('in');
+      });
+    }, 3000);
   })();
 
   /* --- cabeçalho ganha peso ao sair do topo (sem listener de scroll) ---- */
