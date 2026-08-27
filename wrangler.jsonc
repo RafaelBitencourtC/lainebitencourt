@@ -1,0 +1,20 @@
+{
+  // Worker com apenas assets estaticos. O nome tem de bater exatamente com o
+  // do projeto ja existente no painel da Cloudflare ("lainebitencourt"), senao
+  // um deploy cria um Worker novo em vez de atualizar este.
+  "name": "lainebitencourt",
+  "compatibility_date": "2026-08-27",
+
+  "assets": {
+    // A raiz do repositorio E o site. Nao ha build.
+    "directory": "./",
+
+    // Serve /sobre/index.html em /sobre/ — e o que a estrutura de pastas
+    // deste repositorio pressupoe. E tambem o padrao.
+    "html_handling": "auto-trailing-slash",
+
+    // Sem isto, uma URL inexistente devolve o index.html com status 200.
+    // Com isto, devolve o 404.html com status 404, que e o correto.
+    "not_found_handling": "404-page"
+  }
+}

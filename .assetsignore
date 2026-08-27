@@ -1,0 +1,4 @@
+# Arquivos do repositorio que nao fazem parte do site publicado.
+wrangler.jsonc
+.assetsignore
+.git
