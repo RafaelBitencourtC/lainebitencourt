@@ -37,33 +37,84 @@
   (function () {
     var alvos = document.querySelectorAll('[data-reveal]');
     if (!alvos.length) return;
-    if (calmo || !('IntersectionObserver' in window)){
-      Array.prototype.forEach.call(alvos, function(el){ el.classList.add('in'); });
-      return;
+    if (calmo || !('IntersectionObserver' in window)) return;   /* fica tudo visivel */
+
+    /* Esconde SO o que esta abaixo da dobra agora. O que ja esta na tela
+       nunca e escondido. */
+    function foraDaDobra(el) {
+      return el.getBoundingClientRect().top > window.innerHeight * 0.92;
     }
-    var obs = new IntersectionObserver(function (es){
-      es.forEach(function (e){
+
+    var pend = [];
+    Array.prototype.forEach.call(alvos, function (el) {
+      if (foraDaDobra(el)) { el.classList.add('pend'); pend.push(el); }
+    });
+    if (!pend.length) return;
+
+    /* O navegador restaura a rolagem DEPOIS que este script roda. Num reload
+       em meio de pagina mediamos a dobra com a rolagem ainda em zero, marcavamos
+       como "abaixo da dobra" um elemento que o leitor ja tinha diante dos olhos,
+       e ele sumia. Reconferimos antes da primeira pintura, no quadro seguinte
+       e no load: o que ja esta na tela perde .pend antes de qualquer pintura. */
+    function reconferir() {
+      for (var i = pend.length - 1; i >= 0; i--) {
+        if (!foraDaDobra(pend[i])) { pend[i].classList.remove('pend'); pend.splice(i, 1); }
+      }
+    }
+
+    /* So depois de esconder e reconferir e que a transicao e armada — ver o
+       comentario no site.css. Antes disso, esconder e corrigir sao instantaneos. */
+    requestAnimationFrame(function () {
+      reconferir();
+      requestAnimationFrame(function () {
+        reconferir();
+        document.documentElement.classList.add('armado');
+      });
+    });
+    window.addEventListener('load', reconferir);
+
+    /* Rede de seguranca continua: o IntersectionObserver falha de vez em
+       quando (observado — 1 em 5 cargas no desktop deixava um h2 escondido
+       ate o timeout). Uma verificacao na rolagem, limitada a um quadro, cobre
+       qualquer elemento que o observer tenha deixado passar. Barato: so roda
+       enquanto ainda existe algo pendente, e se desliga sozinho. */
+    var agendado = false;
+    function naRolagem() {
+      if (agendado) return;
+      agendado = true;
+      requestAnimationFrame(function () {
+        agendado = false;
+        for (var i = pend.length - 1; i >= 0; i--) {
+          if (!foraDaDobra(pend[i])) { revelar(pend[i]); pend.splice(i, 1); }
+        }
+        if (!pend.length) window.removeEventListener('scroll', naRolagem);
+      });
+    }
+    window.addEventListener('scroll', naRolagem, { passive: true });
+
+    function revelar(el) {
+      var irmaos = el.parentElement
+        ? el.parentElement.querySelectorAll(':scope > [data-reveal].pend') : [];
+      var i = Array.prototype.indexOf.call(irmaos, el);
+      el.style.setProperty('--d', (i > 0 ? Math.min(i, 5) * 80 : 0) + 'ms');
+      el.classList.remove('pend');
+      if (obs) obs.unobserve(el);
+    }
+
+    var obs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
         if (!e.isIntersecting) return;
-        var irmaos = e.target.parentElement ? e.target.parentElement.querySelectorAll(':scope > [data-reveal]') : [];
-        var i = Array.prototype.indexOf.call(irmaos, e.target);
-        e.target.style.setProperty('--d', (i > 0 ? Math.min(i,5) * 80 : 0) + 'ms');
-        e.target.classList.add('in');
-        obs.unobserve(e.target);
+        var k = pend.indexOf(e.target);
+        if (k > -1) pend.splice(k, 1);
+        revelar(e.target);
       });
     }, { threshold: 0 });
-    Array.prototype.forEach.call(alvos, function(el){ obs.observe(el); });
+    pend.forEach(function (el) { obs.observe(el); });
 
-    /* Rede de seguranca. O rootMargin negativo que existia aqui encolhia a
-       raiz em 10% na base, entao qualquer elemento nos ultimos 10% do
-       documento nunca chegava a "entrar" — nem rolando ate o fim — e ficava
-       em opacity:0 para sempre. Aconteceu com o ultimo link de cada pagina.
-       Agora o threshold e 0 e, alem disso, tudo que continuar escondido
-       depois de 3s aparece de qualquer jeito: animacao nao vista e um
-       detalhe, texto nao lido nao e. */
+    /* Rede de seguranca: passados 3s, o que ainda estiver pendente aparece.
+       Animacao nao vista e um detalhe; texto nao lido nao e. */
     setTimeout(function () {
-      Array.prototype.forEach.call(alvos, function (el) {
-        if (!el.classList.contains('in')) el.classList.add('in');
-      });
+      pend.forEach(function (el) { el.classList.remove('pend'); });
     }, 3000);
   })();
 

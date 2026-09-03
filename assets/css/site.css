@@ -96,10 +96,23 @@ body>*:not(.field){position:relative;z-index:1;}
    Onde o navegador suporta animação ligada ao scroll, ela roda no
    compositor e não custa JS. Onde não, o site.js usa IntersectionObserver.
 ------------------------------------------------------------------------ */
-[data-reveal]{opacity:0;transform:translate3d(0,34px,0);}
-.js [data-reveal]{transition:opacity var(--t3) var(--e),transform var(--t3) var(--e);transition-delay:var(--d,0ms);}
-[data-reveal].in{opacity:1;transform:none;}
-html:not(.js) [data-reveal]{opacity:1;transform:none;}
+/* INVERSAO DELIBERADA — ler antes de mexer.
+   O conteudo NUNCA nasce escondido. Antes, [data-reveal] comecava em
+   opacity:0 e dependia do JS para aparecer: qualquer falha — erro de script,
+   restauracao de rolagem, observer que nao dispara — deixava texto invisivel
+   numa pagina que alguem em crise esta tentando ler.
+   Agora o JS marca .pend APENAS nos elementos que estao abaixo da dobra no
+   momento em que ele roda. O que ja esta visivel nunca e escondido, e se o
+   JS nao rodar nada some. Animacao e um bonus; o texto e o produto.
+
+   O .armado no <html> corrige um defeito observado. A transicao valia
+   tambem na ENTRADA do estado: ao marcar .pend, texto que ja estava na tela
+   desaparecia suavemente diante do leitor (no reload com rolagem restaurada
+   o h2 caiu de 1 a 0 em ~400ms). Esconder tem de ser instantaneo. Entao o
+   site.js so arma a transicao DEPOIS de esconder e de reconferir a dobra:
+   antes disso nada anima, nem para esconder nem para corrigir. */
+.js [data-reveal].pend{opacity:0;transform:translate3d(0,34px,0);}
+.js.armado [data-reveal]{transition:opacity var(--t3) var(--e),transform var(--t3) var(--e);transition-delay:var(--d,0ms);}
 
 @supports (animation-timeline:view()){
   /* profundidades diferentes: o que está "mais longe" se move menos */
@@ -115,7 +128,7 @@ html:not(.js) [data-reveal]{opacity:1;transform:none;}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
   *,*::before,*::after{animation:none!important;transition:none!important;}
-  [data-reveal]{opacity:1!important;transform:none!important;}
+  [data-reveal],[data-reveal].pend{opacity:1!important;transform:none!important;}
 }
 
 /* ---------- Fusão entre seções — a "transição proposta" ---------------- */
