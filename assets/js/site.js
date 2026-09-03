@@ -39,6 +39,24 @@
     if (!alvos.length) return;
     if (calmo || !('IntersectionObserver' in window)) return;   /* fica tudo visivel */
 
+    /* A REGRA QUE MANDA AQUI: nunca esconder o que o navegador ja pintou.
+       Observado no Chrome do Rafael, no site no ar: num reload com rolagem
+       restaurada a pagina pintava primeiro e o script rodava depois, entao ele
+       marcava .pend num texto que ja estava na tela. O leitor via a frase
+       aparecer e sumir. Nenhuma das redes de seguranca resolvia isso, porque
+       todas agem DEPOIS — o estrago ja tinha acontecido na primeira pintura.
+
+       Se a pintura ja ocorreu, nao escondemos nada. O visitante perde a
+       animacao de entrada e fica com o texto todo na tela. E a troca certa:
+       animacao e enfeite, o texto e o produto.
+
+       innerHeight zero (aba em segundo plano, pre-render) cai na mesma regra:
+       sem viewport confiavel a conta da dobra da errado e marcaria a pagina
+       inteira como escondida. */
+    var jaPintou = false;
+    try { jaPintou = performance.getEntriesByType('paint').length > 0; } catch (e) {}
+    if (jaPintou || !window.innerHeight) return;
+
     /* Esconde SO o que esta abaixo da dobra agora. O que ja esta na tela
        nunca e escondido. */
     function foraDaDobra(el) {
@@ -49,7 +67,10 @@
     Array.prototype.forEach.call(alvos, function (el) {
       if (foraDaDobra(el)) { el.classList.add('pend'); pend.push(el); }
     });
-    if (!pend.length) return;
+    /* Arma a transicao mesmo se nada ficou pendente: o .armado precisa estar
+       no <html> antes de qualquer revelacao, e sair daqui cedo demais deixava
+       a transicao desarmada (observado: transitionDuration 0s no site no ar). */
+    if (!pend.length) { document.documentElement.classList.add('armado'); return; }
 
     /* O navegador restaura a rolagem DEPOIS que este script roda. Num reload
        em meio de pagina mediamos a dobra com a rolagem ainda em zero, marcavamos
