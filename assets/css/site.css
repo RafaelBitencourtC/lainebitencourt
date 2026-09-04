@@ -119,36 +119,66 @@ body>*:not(.field){position:relative;z-index:1;}
    (animation-timeline:view()), e nunca deixar o JS mexer na visibilidade
    de [data-reveal]. Animacao e enfeite; o texto e o produto.
 ------------------------------------------------------------------------ */
-@keyframes revelar{
-  from{opacity:0;transform:translate3d(0,34px,0);}
-  to{opacity:1;transform:none;}
-}
+/* Duas animacoes separadas de proposito, e a separacao e a regra de
+   seguranca inteira:
+
+     `surgir` mexe na OPACIDADE e termina rapido (20% da entrada). Animacao
+     ligada a rolagem e scrubbed — anda para tras quando a pagina sobe. Faixa
+     curta significa que texto legivel nunca apaga, subindo ou descendo.
+
+     `subir` mexe no TRANSFORM e pode durar bem mais (70%), porque deslocar
+     um elemento nunca o torna ilegivel. E daqui que vem o movimento que se
+     percebe.
+
+   Quem encurtar `subir` para acompanhar `surgir` mata a animacao de entrada
+   sem ganhar seguranca nenhuma. Ja aconteceu. */
+@keyframes surgir{from{opacity:0}to{opacity:1}}
+@keyframes subir{from{transform:translate3d(0,34px,0)}to{transform:none}}
 
 @supports (animation-timeline:view()){
   @media (prefers-reduced-motion:no-preference){
-    /* `both` e o que garante o texto legivel: um elemento que ja passou da
-       sua faixa de entrada (tudo que esta acima da dobra no carregamento)
-       fica no estado FINAL, opaco. Nada nasce escondido. */
+    /* `both` garante o texto legivel: o que ja passou da faixa de entrada
+       (tudo acima da dobra no carregamento) fica no estado FINAL, opaco. */
     [data-reveal]{
-      animation:revelar linear both;
-      animation-timeline:view();
-      /* Termina cedo de proposito: qualquer elemento com metade a mostra ja
-         esta 100% opaco. Um trecho so espiando na borda de baixo pode estar
-         translucido — isso e a animacao acontecendo, e resolve com qualquer
-         rolagem. O que nao pode e texto legivel ficar apagado. */
-      animation-range:entry 0% entry 50%;
+      animation:surgir linear both, subir linear both;
+      animation-timeline:view(), view();
+      animation-range:entry 0% entry 20%, entry 0% entry 70%;
     }
-  }
 
-  /* profundidades diferentes: o que está "mais longe" se move menos */
-  [data-depth]{opacity:1;}
-  [data-depth="1"]{animation:dep1 linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
-  [data-depth="2"]{animation:dep2 linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
-  [data-depth="3"]{animation:dep3 linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
-  @keyframes dep1{from{transform:translate3d(0,26px,0)}to{transform:translate3d(0,-26px,0)}}
-  @keyframes dep2{from{transform:translate3d(0,44px,0)}to{transform:translate3d(0,-44px,0)}}
-  @keyframes dep3{from{transform:translate3d(0,68px,0)}to{transform:translate3d(0,-68px,0)}}
+    /* Profundidade: o que esta "mais longe" se move menos. Usa `translate`,
+       NAO `transform` — os cards tem data-reveal E data-depth, e com as duas
+       mexendo em transform a ultima vencia e os cards perdiam a entrada
+       inteira. `translate` e independente, entao entrada e parallax convivem. */
+    [data-depth]{opacity:1;}
+    [data-depth="1"]{animation:dep1 linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
+    [data-depth="2"]{animation:dep2 linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
+    [data-depth="3"]{animation:dep3 linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
+
+    /* Quem tem os dois recebe tudo na MESMA declaracao — em regras separadas
+       a segunda substituiria a primeira. */
+    [data-reveal][data-depth="1"]{
+      animation:surgir linear both, subir linear both, dep1 linear both;
+      animation-timeline:view(), view(), view();
+      animation-range:entry 0% entry 20%, entry 0% entry 70%, cover 0% cover 100%;
+    }
+    [data-reveal][data-depth="2"]{
+      animation:surgir linear both, subir linear both, dep2 linear both;
+      animation-timeline:view(), view(), view();
+      animation-range:entry 0% entry 20%, entry 0% entry 70%, cover 0% cover 100%;
+    }
+    [data-reveal][data-depth="3"]{
+      animation:surgir linear both, subir linear both, dep3 linear both;
+      animation-timeline:view(), view(), view();
+      animation-range:entry 0% entry 20%, entry 0% entry 70%, cover 0% cover 100%;
+    }
+
+    @keyframes dep1{from{translate:0 26px}to{translate:0 -26px}}
+    @keyframes dep2{from{translate:0 44px}to{translate:0 -44px}}
+    @keyframes dep3{from{translate:0 68px}to{translate:0 -68px}}
+  }
 }
+
+
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
