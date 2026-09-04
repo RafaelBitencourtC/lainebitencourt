@@ -93,28 +93,53 @@ a:active{color:var(--gold-pale);}
 body>*:not(.field){position:relative;z-index:1;}
 
 /* ---------- Movimento ---------------------------------------------------
-   Onde o navegador suporta animação ligada ao scroll, ela roda no
-   compositor e não custa JS. Onde não, o site.js usa IntersectionObserver.
------------------------------------------------------------------------- */
-/* INVERSAO DELIBERADA — ler antes de mexer.
-   O conteudo NUNCA nasce escondido. Antes, [data-reveal] comecava em
-   opacity:0 e dependia do JS para aparecer: qualquer falha — erro de script,
-   restauracao de rolagem, observer que nao dispara — deixava texto invisivel
-   numa pagina que alguem em crise esta tentando ler.
-   Agora o JS marca .pend APENAS nos elementos que estao abaixo da dobra no
-   momento em que ele roda. O que ja esta visivel nunca e escondido, e se o
-   JS nao rodar nada some. Animacao e um bonus; o texto e o produto.
+   SEM JAVASCRIPT. Ler isto antes de mexer.
 
-   O .armado no <html> corrige um defeito observado. A transicao valia
-   tambem na ENTRADA do estado: ao marcar .pend, texto que ja estava na tela
-   desaparecia suavemente diante do leitor (no reload com rolagem restaurada
-   o h2 caiu de 1 a 0 em ~400ms). Esconder tem de ser instantaneo. Entao o
-   site.js so arma a transicao DEPOIS de esconder e de reconferir a dobra:
-   antes disso nada anima, nem para esconder nem para corrigir. */
-.js [data-reveal].pend{opacity:0;transform:translate3d(0,34px,0);}
-.js.armado [data-reveal]{transition:opacity var(--t3) var(--e),transform var(--t3) var(--e);transition-delay:var(--d,0ms);}
+   O reveal ja falhou quatro vezes em producao, cada vez por um motivo
+   diferente, e sempre pelo mesmo padrao: era o JS que escondia o texto, e
+   entao qualquer primitiva do navegador que falhasse deixava texto invisivel
+   numa pagina que alguem em crise esta tentando ler. As quatro:
+
+     1. transicao valendo tambem na ENTRADA do estado escondido — o texto
+        desaparecia suavemente diante do leitor;
+     2. a dobra medida antes de o navegador restaurar a rolagem — escondia
+        justamente o que estava na tela;
+     3. IntersectionObserver que nao dispara (1 em 5 cargas no desktop);
+     4. performance.getEntriesByType('paint') vazio — a guarda "ja pintou?"
+        simplesmente nunca disparava.
+
+   A licao nao e "achar a primitiva certa". E que o texto nao pode depender
+   de primitiva nenhuma. Agora a animacao e 100% CSS: o conteudo nasce
+   visivel e NADA no site consegue esconde-lo. Onde o navegador suporta
+   animacao ligada a rolagem (Chrome, Edge), ela roda no compositor. Onde
+   nao suporta (Safari, Firefox hoje), o texto simplesmente aparece parado —
+   que e exatamente a troca certa.
+
+   REGRA: nunca introduzir opacity:0 fora de um bloco @supports
+   (animation-timeline:view()), e nunca deixar o JS mexer na visibilidade
+   de [data-reveal]. Animacao e enfeite; o texto e o produto.
+------------------------------------------------------------------------ */
+@keyframes revelar{
+  from{opacity:0;transform:translate3d(0,34px,0);}
+  to{opacity:1;transform:none;}
+}
 
 @supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    /* `both` e o que garante o texto legivel: um elemento que ja passou da
+       sua faixa de entrada (tudo que esta acima da dobra no carregamento)
+       fica no estado FINAL, opaco. Nada nasce escondido. */
+    [data-reveal]{
+      animation:revelar linear both;
+      animation-timeline:view();
+      /* Termina cedo de proposito: qualquer elemento com metade a mostra ja
+         esta 100% opaco. Um trecho so espiando na borda de baixo pode estar
+         translucido — isso e a animacao acontecendo, e resolve com qualquer
+         rolagem. O que nao pode e texto legivel ficar apagado. */
+      animation-range:entry 0% entry 50%;
+    }
+  }
+
   /* profundidades diferentes: o que está "mais longe" se move menos */
   [data-depth]{opacity:1;}
   [data-depth="1"]{animation:dep1 linear both;animation-timeline:view();animation-range:cover 0% cover 100%;}
@@ -128,7 +153,7 @@ body>*:not(.field){position:relative;z-index:1;}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
   *,*::before,*::after{animation:none!important;transition:none!important;}
-  [data-reveal],[data-reveal].pend{opacity:1!important;transform:none!important;}
+  [data-reveal]{opacity:1!important;transform:none!important;}
 }
 
 /* ---------- Fusão entre seções — a "transição proposta" ---------------- */

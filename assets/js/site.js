@@ -14,7 +14,6 @@
   'use strict';
 
   var LOCAIS = ['hero','barra_fixa_mobile','menu_topo','rodape','bloco_contato','pagina_atuacao','pagina_artigo'];
-  var calmo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* usado so para diagnostico do parallax; NAO gate a revelacao */
   var scrollNativo = CSS && CSS.supports && CSS.supports('animation-timeline: view()');
 
@@ -27,117 +26,12 @@
   }
 
   /* --- revelação -------------------------------------------------------
-     SEMPRE por IntersectionObserver. Nao existe mais caminho de CSS
-     scroll-driven para revelacao: se este bloco nao rodar, o conteudo fica
-     invisivel. Foi exatamente o que aconteceu em 27/08/2026 — o JS saia
-     cedo quando o navegador suportava animation-timeline, mas o CSS
-     correspondente ja tinha sido removido, e o herei inteiro ficou em
-     opacity:0. Nao reintroduzir nenhuma condicao de saida aqui.
+     NAO EXISTE MAIS AQUI. A revelacao e 100% CSS (animation-timeline:view),
+     ver o bloco "Movimento" no site.css. Este arquivo nao mexe, e nao pode
+     voltar a mexer, na visibilidade de [data-reveal]: quatro incidentes em
+     producao vieram exatamente disso. Se o texto precisa aparecer, ele ja
+     esta visivel; o JS nao participa.
   ------------------------------------------------------------------------ */
-  (function () {
-    var alvos = document.querySelectorAll('[data-reveal]');
-    if (!alvos.length) return;
-    if (calmo || !('IntersectionObserver' in window)) return;   /* fica tudo visivel */
-
-    /* A REGRA QUE MANDA AQUI: nunca esconder o que o navegador ja pintou.
-       Observado no Chrome do Rafael, no site no ar: num reload com rolagem
-       restaurada a pagina pintava primeiro e o script rodava depois, entao ele
-       marcava .pend num texto que ja estava na tela. O leitor via a frase
-       aparecer e sumir. Nenhuma das redes de seguranca resolvia isso, porque
-       todas agem DEPOIS — o estrago ja tinha acontecido na primeira pintura.
-
-       Se a pintura ja ocorreu, nao escondemos nada. O visitante perde a
-       animacao de entrada e fica com o texto todo na tela. E a troca certa:
-       animacao e enfeite, o texto e o produto.
-
-       innerHeight zero (aba em segundo plano, pre-render) cai na mesma regra:
-       sem viewport confiavel a conta da dobra da errado e marcaria a pagina
-       inteira como escondida. */
-    var jaPintou = false;
-    try { jaPintou = performance.getEntriesByType('paint').length > 0; } catch (e) {}
-    if (jaPintou || !window.innerHeight) return;
-
-    /* Esconde SO o que esta abaixo da dobra agora. O que ja esta na tela
-       nunca e escondido. */
-    function foraDaDobra(el) {
-      return el.getBoundingClientRect().top > window.innerHeight * 0.92;
-    }
-
-    var pend = [];
-    Array.prototype.forEach.call(alvos, function (el) {
-      if (foraDaDobra(el)) { el.classList.add('pend'); pend.push(el); }
-    });
-    /* Arma a transicao mesmo se nada ficou pendente: o .armado precisa estar
-       no <html> antes de qualquer revelacao, e sair daqui cedo demais deixava
-       a transicao desarmada (observado: transitionDuration 0s no site no ar). */
-    if (!pend.length) { document.documentElement.classList.add('armado'); return; }
-
-    /* O navegador restaura a rolagem DEPOIS que este script roda. Num reload
-       em meio de pagina mediamos a dobra com a rolagem ainda em zero, marcavamos
-       como "abaixo da dobra" um elemento que o leitor ja tinha diante dos olhos,
-       e ele sumia. Reconferimos antes da primeira pintura, no quadro seguinte
-       e no load: o que ja esta na tela perde .pend antes de qualquer pintura. */
-    function reconferir() {
-      for (var i = pend.length - 1; i >= 0; i--) {
-        if (!foraDaDobra(pend[i])) { pend[i].classList.remove('pend'); pend.splice(i, 1); }
-      }
-    }
-
-    /* So depois de esconder e reconferir e que a transicao e armada — ver o
-       comentario no site.css. Antes disso, esconder e corrigir sao instantaneos. */
-    requestAnimationFrame(function () {
-      reconferir();
-      requestAnimationFrame(function () {
-        reconferir();
-        document.documentElement.classList.add('armado');
-      });
-    });
-    window.addEventListener('load', reconferir);
-
-    /* Rede de seguranca continua: o IntersectionObserver falha de vez em
-       quando (observado — 1 em 5 cargas no desktop deixava um h2 escondido
-       ate o timeout). Uma verificacao na rolagem, limitada a um quadro, cobre
-       qualquer elemento que o observer tenha deixado passar. Barato: so roda
-       enquanto ainda existe algo pendente, e se desliga sozinho. */
-    var agendado = false;
-    function naRolagem() {
-      if (agendado) return;
-      agendado = true;
-      requestAnimationFrame(function () {
-        agendado = false;
-        for (var i = pend.length - 1; i >= 0; i--) {
-          if (!foraDaDobra(pend[i])) { revelar(pend[i]); pend.splice(i, 1); }
-        }
-        if (!pend.length) window.removeEventListener('scroll', naRolagem);
-      });
-    }
-    window.addEventListener('scroll', naRolagem, { passive: true });
-
-    function revelar(el) {
-      var irmaos = el.parentElement
-        ? el.parentElement.querySelectorAll(':scope > [data-reveal].pend') : [];
-      var i = Array.prototype.indexOf.call(irmaos, el);
-      el.style.setProperty('--d', (i > 0 ? Math.min(i, 5) * 80 : 0) + 'ms');
-      el.classList.remove('pend');
-      if (obs) obs.unobserve(el);
-    }
-
-    var obs = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var k = pend.indexOf(e.target);
-        if (k > -1) pend.splice(k, 1);
-        revelar(e.target);
-      });
-    }, { threshold: 0 });
-    pend.forEach(function (el) { obs.observe(el); });
-
-    /* Rede de seguranca: passados 3s, o que ainda estiver pendente aparece.
-       Animacao nao vista e um detalhe; texto nao lido nao e. */
-    setTimeout(function () {
-      pend.forEach(function (el) { el.classList.remove('pend'); });
-    }, 3000);
-  })();
 
   /* --- cabeçalho ganha peso ao sair do topo (sem listener de scroll) ---- */
   (function () {
