@@ -7,6 +7,11 @@
 wrangler.jsonc
 .wrangler
 node_modules
+# Config local do Claude Code e scripts de publicacao: nao sao site.
+# (.claude/ foi publicado por engano em 16/11/2026 e retirado no deploy seguinte.)
+.claude
+tools
+npx
 *.log
 
 # Imagens que sobraram do template e das versoes anteriores. Continuam no
