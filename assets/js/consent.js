@@ -8,12 +8,15 @@
    explícito. "Aceitar" e "Recusar" têm o mesmo peso visual: o Guia veda dark
    patterns. Não alterar essa simetria.
 
-   BLOQUEADOR B-5: não existe ID de medição GA4. Enquanto MEDICAO_ID for null,
-   nada é carregado e nada é enviado. Isso é intencional.
+   B-5 FECHADO em 16/11/2026: ID de medição GA4 = G-KB4H2YY4WX.
+   Modo "básico" do Consent Mode: o gtag.js só é baixado DEPOIS do aceite.
+   Antes disso nada sai do navegador — nem os pings sem cookie do modo
+   avançado. A ordem é sempre: consent default -> consent update -> gtag.js
+   -> config. Se MEDICAO_ID voltar a null, tudo para de novo.
    ========================================================================= */
 (function () {
   'use strict';
-  var MEDICAO_ID = null;             // <-- B-5: trocar por 'G-XXXXXXXXXX'
+  var MEDICAO_ID = 'G-KB4H2YY4WX';   // B-5 fechado em 16/11/2026
   var CHAVE = 'lb_consent_v1';
   var VALIDADE_DIAS = 365;
 

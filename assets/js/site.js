@@ -14,6 +14,15 @@
   'use strict';
 
   var LOCAIS = ['hero','barra_fixa_mobile','menu_topo','rodape','bloco_contato','pagina_atuacao','pagina_artigo'];
+  /* link_location (16/11/2026): agrupamento grosso de `local`, pedido para
+     comparar qual botão converte. `local` continua sendo enviado e continua
+     sendo o contrato fino. Todo valor de LOCAIS precisa ter par aqui. */
+  var LINK_LOCATION = {
+    barra_fixa_mobile: 'flutuante',
+    menu_topo: 'cabecalho',
+    rodape: 'rodape',
+    hero: 'corpo', bloco_contato: 'corpo', pagina_atuacao: 'corpo', pagina_artigo: 'corpo'
+  };
   /* usado so para diagnostico do parallax; NAO gate a revelacao */
   var scrollNativo = CSS && CSS.supports && CSS.supports('animation-timeline: view()');
 
@@ -71,9 +80,12 @@
   document.addEventListener('click', function (ev) {
     var a = ev.target.closest('a[data-contato]'); if (!a) return;
     var tipo = a.getAttribute('data-contato'), local = a.getAttribute('data-local') || 'bloco_contato';
-    if (tipo === 'whatsapp') evento('contato_whatsapp', { local: local, pagina: pagina() });
-    else if (tipo === 'telefone') evento('contato_telefone', { local: local, pagina: pagina() });
-    else if (tipo === 'email') evento('contato_email', { local: local, pagina: pagina() });
+    /* Sem preventDefault e sem redirect: o link abre na hora; o gtag.js envia
+       por sendBeacon, que sobrevive à troca de página. */
+    var p = { local: local, link_location: LINK_LOCATION[local] || 'corpo', pagina: pagina() };
+    if (tipo === 'whatsapp') evento('contato_whatsapp', p);
+    else if (tipo === 'telefone') evento('contato_telefone', p);
+    else if (tipo === 'email') evento('contato_email', p);
   });
 
   /* --- acordeão --------------------------------------------------------- */
