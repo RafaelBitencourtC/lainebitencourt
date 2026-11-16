@@ -116,11 +116,13 @@
     var a = ev.target.closest('a[data-contato]'); if (!a) return;
     if (cliqueAnuncio) beacon({ click: cliqueAnuncio, page: location.pathname, event: 'contato' });
     var tipo = a.getAttribute('data-contato'), local = a.getAttribute('data-local') || 'bloco_contato';
-    /* Sem preventDefault e sem redirect: o link abre na hora; o gtag.js envia
-       por sendBeacon, que sobrevive à troca de página. */
+    /* Sem preventDefault e sem redirect: o link abre na hora. WhatsApp abre em
+       nova aba (target=_blank) e WhatsApp/telefone pedem transport_type
+       'beacon' (16/11/2026), para o evento sair mesmo se a página trocar. */
     var p = { local: local, link_location: LINK_LOCATION[local] || 'corpo', pagina: pagina() };
-    if (tipo === 'whatsapp') evento('contato_whatsapp', p);
-    else if (tipo === 'telefone') evento('contato_telefone', p);
+    var pBeacon = { local: p.local, link_location: p.link_location, pagina: p.pagina, transport_type: 'beacon' };
+    if (tipo === 'whatsapp') evento('contato_whatsapp', pBeacon);
+    else if (tipo === 'telefone') evento('contato_telefone', pBeacon);
     else if (tipo === 'email') evento('contato_email', p);
   });
 
