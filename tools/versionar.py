@@ -42,7 +42,7 @@ for html in sorted(RAIZ.rglob("*.html")):
         padrao = re.compile(r'(["\'])(/' + re.escape(rel) + r')(\?v=[A-Za-z0-9]+)?\1')
         txt = padrao.sub(lambda m: f'{m.group(1)}{m.group(2)}?v={h}{m.group(1)}', txt)
     if txt != original:
-        html.write_text(txt, encoding="utf-8"); mudou += 1
+        html.write_text(txt, encoding="utf-8", newline=""); mudou += 1  # newline="": LF sempre (o Python do Windows gravaria CRLF)
 
 for rel, h in hashes.items():
     print(f"  {rel} -> ?v={h}")

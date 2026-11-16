@@ -12,6 +12,9 @@ node_modules
 .claude
 tools
 npx
+# Codigo do Worker e documentos internos (16/11/2026).
+worker
+docs
 *.log
 
 # Imagens que sobraram do template e das versoes anteriores. Continuam no
@@ -21,3 +24,4 @@ perfill.jpeg
 assets/img/laine.jpg
 assets/img/logo-mark.png
 assets/img/logo-lockup.png
+.dev.vars

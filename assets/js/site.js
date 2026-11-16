@@ -76,9 +76,45 @@
     });
   })();
 
+  /* --- clique de anúncio (16/11/2026, "ClickCease nosso") ----------------
+     Visita que chega com gclid/gbraid/wbraid vira 1 linha no registro de
+     cliques (worker/cliques.js), uma vez por clique por sessão. Um toque em
+     WhatsApp/telefone/e-mail dessa visita marca a linha, para o bloqueio
+     automático de IP nunca tomar quem fez contato por robô. Nada disso vai
+     para o GA4; o id do clique fica só no sessionStorage desta aba.
+     Base legal: legítimo interesse (prevenção a fraude), na Política de
+     Privacidade "Proteção contra cliques inválidos". */
+  var cliqueAnuncio = (function () {
+    var GUARDA = 'lb_click', ENVIADOS = 'lb_click_sent', achado = null, guardado = null;
+    try { guardado = JSON.parse(sessionStorage.getItem(GUARDA) || 'null'); } catch (e) { guardado = null; }
+    try {
+      var q = new URLSearchParams(location.search);
+      ['gclid','gbraid','wbraid'].forEach(function (k) {
+        var v = (q.get(k) || '').trim();
+        if (!achado && /^[A-Za-z0-9_-]{10,200}$/.test(v)) achado = { kind: k, id: v };
+      });
+      if (achado) {
+        var env = ''; try { env = sessionStorage.getItem(ENVIADOS) || ''; } catch (e) {}
+        if (env.indexOf('|' + achado.id + '|') === -1) {   // recarregar a mesma página não é clique novo
+          if (env.length > 4000) env = '';
+          try { sessionStorage.setItem(ENVIADOS, (env || '|') + achado.id + '|'); } catch (e) {}
+          beacon({ click: achado, page: location.pathname, campaign: (q.get('utm_campaign') || '').replace(/[<>]/g, '').trim().slice(0, 60) });
+        }
+        try { sessionStorage.setItem(GUARDA, JSON.stringify(achado)); } catch (e) {}
+      }
+    } catch (e) { /* sem URLSearchParams: sem registro */ }
+    return achado || (guardado && guardado.kind && guardado.id ? guardado : null);
+  })();
+  function beacon(obj) {
+    var corpo = JSON.stringify(obj);
+    try { if (navigator.sendBeacon && navigator.sendBeacon('/api/click', new Blob([corpo], { type: 'application/json' }))) return; } catch (e) {}
+    try { fetch('/api/click', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: corpo, keepalive: true }).catch(function () {}); } catch (e) {}
+  }
+
   /* --- eventos de contato ----------------------------------------------- */
   document.addEventListener('click', function (ev) {
     var a = ev.target.closest('a[data-contato]'); if (!a) return;
+    if (cliqueAnuncio) beacon({ click: cliqueAnuncio, page: location.pathname, event: 'contato' });
     var tipo = a.getAttribute('data-contato'), local = a.getAttribute('data-local') || 'bloco_contato';
     /* Sem preventDefault e sem redirect: o link abre na hora; o gtag.js envia
        por sendBeacon, que sobrevive à troca de página. */

@@ -5,7 +5,22 @@
   "name": "lainebitencourt",
   "compatibility_date": "2026-08-27",
 
+  // 16/11/2026: um Worker pequeno so para /api/* (registro de cliques de
+  // anuncio e bloqueio automatico de IP; ver worker/index.js). Todo o resto
+  // continua sendo servido direto dos assets, sem passar pelo codigo.
+  "main": "worker/index.js",
+
+  // D1 com o registro de cliques. Sem ele o /api/click responde 204 e nao
+  // grava nada; o site nunca quebra por causa disso.
+  "d1_databases": [
+    { "binding": "CLICKS", "database_name": "lainebitencourt-cliques", "database_id": "d1e41895-2b79-44b3-afc9-7e79b2d611fb" }
+  ],
+
   "assets": {
+    "binding": "ASSETS",
+    // So /api/* passa pelo Worker; paginas, CSS e JS saem direto dos assets.
+    "run_worker_first": ["/api/*"],
+
     // A raiz do repositorio E o site. Nao ha build.
     "directory": "./",
 
